@@ -59,3 +59,13 @@ $route['recuperar-senha'] = 'auth/recuperar_senha';
 $route['painel'] = 'painel/index';
 $route['quiz/iniciar/(:any)/(:any)'] = 'quiz/iniciar/$1/$2'; // tema, nivel
 $route['admin/questoes'] = 'admin/lista_questoes';
+$route['professor/login'] = 'Professor/login';
+$route['professor/logout'] = 'Professor/logout';
+$route['professor/dashboard'] = 'Professor/dashboard';
+
+$route['professor/questoes'] = 'Professor/questoes';
+$route['professor/questoes/novo'] = 'Professor/nova_questao';
+$route['professor/questoes/editar/(:num)'] = 'Professor/editar/$1';
+$route['professor/questoes/excluir/(:num)'] = 'Professor/excluir/$1';
+
+
