@@ -26,7 +26,7 @@ body{font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;display:flex;alig
       <input class="input" type="password" name="senha" placeholder="Senha" required>
       <button class="btn" type="submit">Entrar</button>
     </form>
-    <a class="link-small" href="<?=site_url('registrar')?>">Criar conta</a>
+    <a class="link-small" href="<?= site_url('auth/registrar') ?>" target="_blank">Criar conta</a>
     <a class="link-small" href="<?=site_url('recuperar-senha')?>">Esqueci minha senha</a>
   </div>
 </body>
