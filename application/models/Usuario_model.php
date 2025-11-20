@@ -17,7 +17,7 @@ class Usuario_model extends CI_Model {
     public function validar_login($email, $senha){
         $usuario = $this->buscar_por_email($email);
         if(!$usuario) return false;
-        if(password_verify($senha, $usuario->senha_hash)){
+        if(password_verify($senha, $usuario->$senha)){
             return $usuario;
         }
         return false;

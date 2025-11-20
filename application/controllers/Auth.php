@@ -43,9 +43,8 @@ class Auth extends CI_Controller {
                 $this->session->set_flashdata('erro','E-mail já cadastrado');
                 redirect('registrar');
             }
-            $hash = password_hash($senha, PASSWORD_DEFAULT);
             $id = $this->Usuario_model->criar([
-                'nome'=>$nome, 'email'=>$email, 'senha_hash'=>$hash
+                'nome'=>$nome, 'email'=>$email, 'senha_hash'=>$senha
             ]);
             // criar progresso inicial
             $this->db->insert('progresso_usuario',['usuario_id'=>$id,'pontuacao'=>0,'recursos_json'=>'{}']);
