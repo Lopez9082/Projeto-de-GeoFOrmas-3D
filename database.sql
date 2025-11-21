@@ -126,3 +126,29 @@ COLLATE='utf8mb4_unicode_ci'
 ENGINE=MyISAM
 AUTO_INCREMENT=2
 ;
+CREATE TABLE `missoes_usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `missao_id` int(11) NOT NULL,
+  `concluida` tinyint(1) NOT NULL DEFAULT 0,
+  `progresso_atual` int(11) NOT NULL DEFAULT 0,
+  `progresso_total` int(11) NOT NULL DEFAULT 1,
+  `data_inicio` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_conclusao` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `missoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) NOT NULL,
+  `descricao` text NOT NULL,
+  `meta` int(11) NOT NULL,
+  `xp_recompensa` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `badges_usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `badge_id` int(11) NOT NULL,
+  `data_conquista` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
