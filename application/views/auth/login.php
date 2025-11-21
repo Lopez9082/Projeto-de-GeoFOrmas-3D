@@ -16,7 +16,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #2563eb, #1e3a8a);
+            background: linear-gradient(135deg, #A9cddd, #1e3a8a);
             padding: 20px;
         }
 

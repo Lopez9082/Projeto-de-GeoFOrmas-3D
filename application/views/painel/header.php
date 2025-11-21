@@ -1,10 +1,12 @@
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8">
   <title>Painel — Matemática Interativa</title>
   <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
 </head>
+
 <body>
   <div class="container">
 
@@ -17,8 +19,8 @@
       <div class="user-box">
         <div class="avatar-row">
           <?php
-            // avatar: se tiver foto no DB você pode trocar o src; por enquanto usamos iniciais
-            $initials = strtoupper(substr($nome,0,1));
+          // avatar: se tiver foto no DB você pode trocar o src; por enquanto usamos iniciais
+          $initials = strtoupper(substr($nome, 0, 1));
           ?>
           <div class="avatar"><?= $initials ?></div>
           <div style="flex:1">
@@ -37,17 +39,17 @@
         <?php $current_url = current_url(); ?>
 
         <a href="<?= site_url('painel') ?>"
-           class="<?= strpos($current_url, site_url('painel')) !== false && strpos($current_url, site_url('painel/historico')) === false ? 'active' : '' ?>">
+          class="<?= strpos($current_url, site_url('painel')) !== false && strpos($current_url, site_url('painel/historico')) === false ? 'active' : '' ?>">
           Início
         </a>
 
         <a href="<?= site_url('quiz/iniciar/geometria/facil') ?>"
-           class="<?= strpos($current_url, site_url('quiz')) !== false ? 'active' : '' ?>">
+          class="<?= strpos($current_url, site_url('quiz')) !== false ? 'active' : '' ?>">
           Quizzes
         </a>
 
         <a href="<?= site_url('painel/historico') ?>"
-           class="<?= strpos($current_url, site_url('painel/historico')) !== false ? 'active' : '' ?>">
+          class="<?= strpos($current_url, site_url('painel/historico')) !== false ? 'active' : '' ?>">
           Histórico
         </a>
 
@@ -88,6 +90,17 @@
             <p style="margin-top:8px; color:#9a3412;">Seu progresso no laboratório.</p>
           </div>
         </div>
+        <div class="card">
+          <h3>🏅 Suas Conquistas</h3>
+
+          <div class="badge-row">
+            <?php foreach ($badges as $b): ?>
+              <div class="badge">
+                <?= ucfirst($b->slug) ?>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
 
         <!-- THEMES -->
         <div class="card themes-card">
@@ -98,7 +111,18 @@
             <li><a href="<?= site_url('quiz/iniciar/estatistica/facil') ?>">📈 Estatística</a></li>
           </ul>
         </div>
+        <div class="card">
+          <h3>🎯 Missão de Hoje</h3>
+          <p><?= $missao->descricao ?></p>
 
+          <div class="xp-bar" style="margin-top:10px">
+            <i style="width: <?= ($missao->progresso / $missao->meta) * 100 ?>%"></i>
+          </div>
+
+          <small>
+            Progresso: <?= $missao->progresso ?>/<?= $missao->meta ?> — Recompensa: <?= $missao->recompensa ?> XP
+          </small>
+        </div>
         <!-- LAB -->
         <div class="lab-section">
           <div class="lab-info">
@@ -118,8 +142,8 @@
       <div class="mascote-wrapper" aria-hidden="true">
         <!-- Usar o arquivo em assets/img/mascote.png -->
         <img src="<?= base_url('assets/img/mascote.png') ?>"
-             onerror="this.onerror=null; this.src='/mnt/data/A_2D_digital_illustration_of_an_interactive_math_d.png';"
-             alt="Mascote Matemático">
+          onerror="this.onerror=null; this.src='/mnt/data/A_2D_digital_illustration_of_an_interactive_math_d.png';"
+          alt="Mascote Matemático">
         <div class="mascote-bubble" id="mascoteBubble">Pronto para aprender?</div>
       </div>
     </main>
@@ -128,7 +152,7 @@
 
   <!-- scripts: animação de XP e trocar frases do mascote -->
   <script>
-    (function(){
+    (function() {
       // --- calcula valores de XP a partir de PHP (se tiver)
       var pontos = <?= $progresso ? (int)$progresso->pontuacao : 0 ?>;
       // exemplo simples: xp total = pontos * 2; nivel = floor(xp/100); porcent = xp%100
@@ -146,11 +170,12 @@
       ];
       var idx = 0;
       var bubble = document.getElementById('mascoteBubble');
-      setInterval(function(){
+      setInterval(function() {
         idx = (idx + 1) % frases.length;
         bubble.textContent = frases[idx];
       }, 4200);
     })();
   </script>
 </body>
+
 </html>
