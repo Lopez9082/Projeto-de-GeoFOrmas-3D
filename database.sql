@@ -152,3 +152,87 @@ CREATE TABLE `badges_usuario` (
   `data_conquista` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
+
+
+
+/* NOVAS ATUALIZAÇÕES */
+CREATE TABLE `professores` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`nome` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`email` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`senha` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`criado_em` DATETIME NULL DEFAULT (CURRENT_TIMESTAMP),
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `email` (`email`) USING BTREE
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=MyISAM
+AUTO_INCREMENT=2
+;
+
+
+CREATE TABLE `progresso_usuario` (
+	`usuario_id` INT NOT NULL,
+	`xp_total` INT NOT NULL DEFAULT '0',
+	`funcionalidades_json` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	PRIMARY KEY (`usuario_id`) USING BTREE
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=MyISAM
+;
+
+
+CREATE TABLE `questoes` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`tema_id` INT NOT NULL,
+	`nivel` ENUM('facil','medio','dificil') NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`enunciado` TEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`imagem` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`alternativa_a` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`alternativa_b` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`alternativa_c` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`alternativa_d` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`alternativa_e` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`correta` CHAR(1) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`feedback_pedagogico` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	`criado_por` INT NULL DEFAULT NULL,
+	`criado_em` DATETIME NULL DEFAULT (now()),
+	`excluida` TINYINT(1) NOT NULL DEFAULT '0',
+	`motivo_exclusao` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `tema_id` (`tema_id`) USING BTREE,
+	INDEX `criado_por` (`criado_por`) USING BTREE
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=MyISAM
+AUTO_INCREMENT=10
+;
+
+
+CREATE TABLE `temas` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`slug` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`titulo` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `slug` (`slug`) USING BTREE
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=MyISAM
+AUTO_INCREMENT=4
+;
+
+
+CREATE TABLE `usuarios` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`nome` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`email` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`senha` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`papel` ENUM('aluno','professor','licenciado','admin') NULL DEFAULT 'aluno' COLLATE 'utf8mb4_unicode_ci',
+	`criado_em` DATETIME NULL DEFAULT (CURRENT_TIMESTAMP),
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `email` (`email`) USING BTREE
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=MyISAM
+AUTO_INCREMENT=3
+;

@@ -33,9 +33,9 @@
 
     <label>Nível:</label>
     <select name="nivel" required>
-        <option value="Fácil" <?= isset($questao) && $questao->nivel == 'Fácil' ? 'selected' : '' ?>>Fácil</option>
-        <option value="Médio" <?= isset($questao) && $questao->nivel == 'Médio' ? 'selected' : '' ?>>Médio</option>
-        <option value="Difícil" <?= isset($questao) && $questao->nivel == 'Difícil' ? 'selected' : '' ?>>Difícil</option>
+        <option value="Fácil" <?= isset($questao) && $questao->nivel == 'Ensino Fundamental I' ? 'selected' : '' ?>>Fácil</option>
+        <option value="Médio" <?= isset($questao) && $questao->nivel == 'Ensino Fundamental II' ? 'selected' : '' ?>>Médio</option>
+        <option value="Difícil" <?= isset($questao) && $questao->nivel == 'Ensino médio' ? 'selected' : '' ?>>Difícil</option>
     </select>
     <br><br>
 

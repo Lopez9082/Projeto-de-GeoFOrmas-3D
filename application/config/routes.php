@@ -68,4 +68,15 @@ $route['professor/questoes/novo'] = 'Professor/nova_questao';
 $route['professor/questoes/editar/(:num)'] = 'Professor/editar/$1';
 $route['professor/questoes/excluir/(:num)'] = 'Professor/excluir/$1';
 
+$route['temas'] = 'temas/index';
+$route['temas/questoes/(:num)'] = 'temas/questoes/$1';
+$route['responder/tentar/(:num)'] = 'responder/tentar/$1';
+$route['laboratorio'] = 'laboratorio/index';
+
+$route['quizzes'] = 'Quizzes';
+$route['quizzes/tema/(:num)'] = 'Quizzes/tema/$1';
+$route['quizzes/iniciar'] = 'Quizzes/iniciar';
+$route['quizzes/pergunta'] = 'Quizzes/pergunta';
+$route['quizzes/responder'] = 'Quizzes/responder';
+$route['quizzes/final'] = 'Quizzes/final';
 

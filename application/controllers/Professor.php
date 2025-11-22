@@ -79,25 +79,14 @@ class Professor extends CI_Controller {
 
         if ($this->input->post()) {
 
-            $imagem = null;
+            $imagem = $this->fazer_upload_imagem();
 
-            if (!empty($_FILES['imagem']['name'])) {
-                $config['upload_path']   = './uploads/questoes/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['encrypt_name']  = TRUE;
-
-                $this->upload->initialize($config);
-
-                if ($this->upload->do_upload('imagem')) {
-                    $imagem = $this->upload->data()['file_name'];
-                }
-            }
 
             $dados = [
                 'tema_id'             => $this->input->post('tema_id'),
                 'nivel'               => $this->input->post('nivel'),
                 'enunciado'           => $this->input->post('enunciado'),
-                'imagem'              => $imagem,
+                'imagem'              => $imagem, // nome do arquivo OU null
                 'alternativa_a'       => $this->input->post('alternativa_a'),
                 'alternativa_b'       => $this->input->post('alternativa_b'),
                 'alternativa_c'       => $this->input->post('alternativa_c'),
@@ -107,6 +96,9 @@ class Professor extends CI_Controller {
                 'feedback_pedagogico' => $this->input->post('feedback_pedagogico'),
                 'criado_por'          => $prof['id']
             ];
+
+            $this->Questao_model->inserir($dados);
+
 
             $this->Questao_model->inserir($dados);
 
@@ -151,26 +143,16 @@ class Professor extends CI_Controller {
     // Se o formulário foi submetido
     if ($this->input->post()) {
 
-        $imagem = $questao->imagem;
-
-        // Upload opcional de imagem
-        if (!empty($_FILES['imagem']['name'])) {
-            $config['upload_path']   = './uploads/questoes/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['encrypt_name']  = TRUE;
-
-            $this->upload->initialize($config);
-
-            if ($this->upload->do_upload('imagem')) {
-
-                // Remove a imagem antiga
-                if ($imagem && file_exists("./uploads/questoes/" . $imagem)) {
-                    unlink("./uploads/questoes/" . $imagem);
-                }
-
-                $imagem = $this->upload->data()['file_name'];
+        $imagem = $this->fazer_upload_imagem();
+        if ($imagem) {
+            // apaga antiga
+            if ($questao->imagem && file_exists('./uploads/questoes/'.$questao->imagem)) {
+                unlink('./uploads/questoes/'.$questao->imagem);
             }
+        } else {
+            $imagem = $questao->imagem; // mantém a antiga
         }
+
 
         $dados = [
             'tema_id'             => $this->input->post('tema_id'),
@@ -216,4 +198,82 @@ class Professor extends CI_Controller {
         $this->session->set_flashdata('sucesso', 'Questão excluída!');
         redirect('professor/questoes');
     }
+
+    
+
+    // ----------- FUNÇÃO DE UPLOAD -----------
+    private function fazer_upload_imagem()
+{
+    if (empty($_FILES['imagem']['name'])) {
+        return null;
+    }
+
+    // cria a pasta se não existir
+    if (!is_dir('./uploads/questoes/')) {
+        mkdir('./uploads/questoes/', 0777, true);
+    }
+
+    $config['upload_path']   = './uploads/questoes/';
+    $config['allowed_types'] = 'jpg|jpeg|png|gif';
+    $config['max_size']      = 2048;
+    $config['encrypt_name']  = TRUE;
+
+    $this->upload->initialize($config);
+
+    if (!$this->upload->do_upload('imagem')) {
+
+        // Para DEBUG e visualizar o problema
+        log_message('error', 'UPLOAD ERROR: ' . $this->upload->display_errors('', ''));
+
+        // Mostra o erro para o usuário
+        $this->session->set_flashdata('erro', $this->upload->display_errors());
+        return null;  
+    }
+
+    $dados = $this->upload->data();
+    return $dados['file_name'];
 }
+
+public function logout()
+{
+    $this->session->unset_userdata('professor');
+    $this->session->sess_destroy();
+
+    redirect('professor/login');
+}
+
+
+public function ocultar_questao($id)
+{
+    $questao = $this->Questao_model->buscar($id);
+
+    if (!$questao) {
+        show_404();
+        return;
+    }
+
+    if ($this->input->post()) {
+
+        $motivo = $this->input->post('motivo');
+
+        $this->Questao_model->ocultar($id, $motivo);
+
+        $this->session->set_flashdata('sucesso', 'Questão oculta com sucesso!');
+        redirect('professor/questoes');
+        return;
+    }
+
+    $data['questao'] = $questao;
+
+    $this->load->view('professor/header');
+    $this->load->view('professor/excluir_confirmacao', $data);
+    $this->load->view('professor/footer');
+}
+
+
+
+
+    
+
+}
+

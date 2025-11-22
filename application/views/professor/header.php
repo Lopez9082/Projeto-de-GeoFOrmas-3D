@@ -33,7 +33,7 @@
     <nav>
         <a href="<?= site_url('professor/dashboard') ?>">🏠 Início</a>
         <a href="<?= site_url('professor/questoes') ?>">📝 Questões</a>
-        <a href="<?= site_url('professorauth/logout') ?>">❌ Sair</a>
+        <a href="<?= site_url('professor/logout') ?>">❌ Sair</a>
     </nav>
 </header>
 

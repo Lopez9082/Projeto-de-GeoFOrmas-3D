@@ -1,17 +1,28 @@
-<h1>Bem-vindo, <?= html_escape($nome) ?></h1>
-<p>Produto do Projeto de Iniciação Científica UNIG EAD/Semipresencial, Edital 2024.2 — "CONSTRUÇÃO DE APLICATIVOS EDUCACIONAIS PARA O ENSINO DE MATEMÁTICA".</p>
+<!-- Informações do usuário -->
+<div class="user-box">
+  <div class="avatar-row">
+    <?php $initials = strtoupper(substr($nome, 0, 1)); ?>
+    <div class="avatar"><?= $initials ?></div>
+    <div style="flex:1">
+      <strong><?= html_escape($nome) ?></strong><br>
+      <small>Pontos: <?= $progresso ? (int)$progresso->xp_total : 0 ?></small>
+    </div>
+  </div>
+</div>
 
-<section>
-  <h3>Temas</h3>
-  <ul>
-    <li><a href="<?=site_url('quiz/iniciar/geometria/facil')?>">Geometria</a></li>
-    <li><a href="<?=site_url('quiz/iniciar/algebra/facil')?>">Álgebra</a></li>
-    <li><a href="<?=site_url('quiz/iniciar/estatistica/facil')?>">Estatística</a></li>
-  </ul>
-</section>
+<!-- STATUS CARDS -->
+<div class="top-status-grid">
+  <div class="card points">
+    <h3>Seus Pontos Atuais</h3>
+    <div class="value"><?= $progresso ? (int)$progresso->xp_total : 0 ?></div>
+  </div>
 
-<section>
-  <h3>Laboratório virtual</h3>
-  <p>Recursos do laboratório (visual) serão atualizados conforme seus pontos.</p>
-  <!-- Aqui você pode carregar um SVG/Canvas que mude conforme progresso (recursos_json) -->
-</section>
+ 
+
+  <div class="card lab">
+    <h3>Recursos Desbloqueados</h3>
+    <div class="value">Nível 1</div>
+  </div>
+</div>
+
+

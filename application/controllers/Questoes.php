@@ -7,199 +7,200 @@ class Questoes extends CI_Controller {
         parent::__construct();
         $this->load->model('Questoes_model');
         $this->load->library(['session', 'upload', 'form_validation']);
+        $this->load->helper(['security','url','form']);
 
-        // Verificação de login obrigatória
+        // Verificação de login básica (compatível com seu Auth: 'logado' + 'papel')
         if (!$this->session->userdata('logado')) {
-            redirect('professor/login');
+            redirect('login');
+            exit;
         }
-
-        // Carregar CSRF para segurança
-        $this->load->helper('security');
     }
 
-    // Método para listar questões (área do professor)
+    // Listar questões (apenas professores/licenciados/admin)
     public function index() {
-        if ($this->session->userdata('role') !== 'professor') {
-            redirect('professor/login'); // Restringir a professores
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) {
+            show_error('Acesso negado', 403);
         }
-        $data['lista'] = $this->Questoes_model->get_all();
+
+        $usuario_id = $this->session->userdata('usuario_id'); // caso queira filtrar por criador
+        // listar apenas não-excluídas
+        $data['lista'] = $this->Questoes_model->get_all_by_creator($usuario_id);
         $this->load->view('questoes/index', $data);
     }
 
-    // Método para criar nova questão (professor)
+    // Form para criar
     public function criar() {
-        if ($this->session->userdata('role') !== 'professor') {
-            redirect('professor/login');
-        }
-        $this->load->view('questoes/form');
-    }
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
 
-    // Método para salvar nova questão
-    public function salvar() {
-        if ($this->session->userdata('role') !== 'professor') {
-            redirect('professor/login');
-        }
+        // pegar temas para select (se existir tabela temas)
+        $data['temas'] = $this->db->order_by('titulo','ASC')->get('temas')->result();
 
-        // Validação de formulário
-        $this->form_validation->set_rules('pergunta', 'Pergunta', 'required|trim');
-        $this->form_validation->set_rules('opcoes', 'Opções', 'required');
-        $this->form_validation->set_rules('resposta_correta', 'Resposta Correta', 'required|trim');
-
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('questoes/form');
-            return;
-        }
-
-        $data = $this->input->post();
-        $data = $this->security->xss_clean($data); // Sanitização
-
-        // Processar upload de imagem (método privado)
-        $data['imagem'] = $this->_process_upload();
-
-        $data['criado_por'] = $this->session->userdata('id');
-        $data['criado_em'] = date('Y-m-d H:i:s');
-
-        if ($this->Questoes_model->insert($data)) {
-            $this->session->set_flashdata('success', 'Questão salva com sucesso!');
-        } else {
-            $this->session->set_flashdata('error', 'Erro ao salvar questão.');
-        }
-        redirect('questoes');
-    }
-
-    // Método para editar questão (professor)
-    public function editar($id) {
-        if ($this->session->userdata('role') !== 'professor') {
-            redirect('professor/login');
-        }
-        $data['q'] = $this->Questoes_model->get($id);
-        if (!$data['q']) {
-            show_404();
-        }
         $this->load->view('questoes/form', $data);
     }
 
-    // Método para atualizar questão
-    public function atualizar($id) {
-        if ($this->session->userdata('role') !== 'professor') {
-            redirect('professor/login');
-        }
+    // Salvar nova questão
+    public function salvar() {
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
 
-        // Validação similar ao salvar
-        $this->form_validation->set_rules('pergunta', 'Pergunta', 'required|trim');
-        $this->form_validation->set_rules('opcoes', 'Opções', 'required');
-        $this->form_validation->set_rules('resposta_correta', 'Resposta Correta', 'required|trim');
+        // regras mínimas — adapte conforme seu formulário
+        $this->form_validation->set_rules('enunciado','Enunciado','required|trim');
+        $this->form_validation->set_rules('correta','Alternativa correta','required|trim');
 
         if ($this->form_validation->run() === FALSE) {
-            $data['q'] = $this->Questoes_model->get($id);
-            $this->load->view('questoes/form', $data);
+            $this->criar();
             return;
         }
 
-        $data = $this->input->post();
-        $data = $this->security->xss_clean($data);
+        $post = $this->input->post(null, true);
+        $post = $this->security->xss_clean($post);
 
-        // Processar upload opcional
+        // upload (cria pasta se necessário)
+        $imagem = $this->_process_upload();
+        if ($imagem === FALSE) {
+            // upload falhou — já defini flash com erro no método; voltar ao form
+            $this->criar();
+            return;
+        }
+        if ($imagem !== NULL) $post['imagem'] = $imagem;
+
+        $post['criado_por'] = $this->session->userdata('usuario_id') ?: null;
+        $post['criado_em'] = date('Y-m-d H:i:s');
+
+        // campos esperados pela tabela: tema_id, nivel, enunciado, imagem, alternativa_a..e, correta, feedback_pedagogico, criado_por
+        $insert_id = $this->Questoes_model->insert($post);
+        if ($insert_id) {
+            $this->session->set_flashdata('sucesso','Questão cadastrada com sucesso.');
+        } else {
+            $this->session->set_flashdata('erro','Erro ao salvar questão.');
+        }
+        redirect('questoes');
+    }
+
+    // Form de edição
+    public function editar($id) {
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
+
+        $questao = $this->Questoes_model->get($id);
+        if (!$questao) show_404();
+
+        $data['questao'] = $questao;
+        $data['temas'] = $this->db->order_by('titulo','ASC')->get('temas')->result();
+
+        $this->load->view('questoes/form', $data);
+    }
+
+    // Atualizar após edição
+    public function atualizar($id) {
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
+
+        $this->form_validation->set_rules('enunciado','Enunciado','required|trim');
+        $this->form_validation->set_rules('correta','Alternativa correta','required|trim');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->editar($id);
+            return;
+        }
+
+        $post = $this->input->post(null, true);
+        $post = $this->security->xss_clean($post);
+
+        // upload opcional
         $upload = $this->_process_upload();
-        if ($upload) {
-            $data['imagem'] = $upload;
+        if ($upload === FALSE) {
+            $this->editar($id);
+            return;
         }
+        if ($upload !== NULL) $post['imagem'] = $upload;
 
-        if ($this->Questoes_model->update($id, $data)) {
-            $this->session->set_flashdata('success', 'Questão atualizada!');
-        } else {
-            $this->session->set_flashdata('error', 'Erro ao atualizar.');
-        }
+        $ok = $this->Questoes_model->update($id, $post);
+        $this->session->set_flashdata($ok ? 'sucesso' : 'erro', $ok ? 'Atualizado.' : 'Erro ao atualizar.');
         redirect('questoes');
     }
 
-    // Método para excluir questão (professor)
+    // Excluir logicamente com justificativa (mostre um form antes)
+    public function excluir_confirm($id) {
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
+
+        $data['q'] = $this->Questoes_model->get($id);
+        if (!$data['q']) show_404();
+        $this->load->view('questoes/excluir_confirm', $data);
+    }
+
     public function excluir($id) {
-        if ($this->session->userdata('role') !== 'professor') {
-            redirect('professor/login');
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
+
+        $motivo = $this->input->post('motivo_exclusao', true);
+        if (trim($motivo) === '') {
+            $this->session->set_flashdata('erro','Informe o motivo da exclusão.');
+            redirect('questoes/excluir_confirm/'.$id);
         }
-        if ($this->Questoes_model->delete($id)) {
-            $this->session->set_flashdata('success', 'Questão excluída!');
-        } else {
-            $this->session->set_flashdata('error', 'Erro ao excluir.');
-        }
+
+        $this->Questoes_model->excluir_logicamente($id, $motivo);
+        $this->session->set_flashdata('sucesso','Questão marcada como excluída.');
         redirect('questoes');
     }
 
-    // Novo: Método para visualizar questões (alunos)
+    // VIEW para alunos (simples)
     public function view_questions() {
-        if ($this->session->userdata('role') !== 'aluno') {
-            redirect('professor/login'); // Restringir a alunos
-        }
-        $questions = $this->Questoes_model->get_all(); // Assumindo questões ativas
-        $data['questions'] = $questions;
+        // qualquer aluno logado
+        if ($this->session->userdata('papel') !== 'aluno') redirect('login');
+
+        $data['questions'] = $this->Questoes_model->get_all_active();
         $this->load->view('student/view_questions', $data);
     }
 
-    // Novo: Método para submeter resposta (alunos)
+    // Submeter resposta (simples)
     public function submit_answer() {
-        if ($this->session->userdata('role') !== 'aluno') {
-            redirect('professor/login');
-        }
+        if ($this->session->userdata('papel') !== 'aluno') redirect('login');
 
-        $question_id = $this->input->post('question_id');
-        $answer = $this->input->post('answer');
+        $question_id = $this->input->post('question_id', true);
+        $answer = $this->input->post('answer', true);
 
-        if (!$question_id || !$answer) {
-            $this->session->set_flashdata('error', 'Dados inválidos.');
+        if (!$question_id || $answer === null) {
+            $this->session->set_flashdata('erro','Dados inválidos.');
             redirect('questoes/view_questions');
         }
 
         $correct = $this->Questoes_model->check_answer($question_id, $answer);
         if ($correct) {
-            $points = $this->session->userdata('points') ?? 0;
-            $this->session->set_userdata('points', $points + 1);
-            $this->_check_lab_pieces(); // Verificar laboratório
-            $this->session->set_flashdata('success', 'Resposta correta! +1 ponto.');
+            $this->session->set_flashdata('sucesso','Resposta correta!');
         } else {
-            $this->session->set_flashdata('error', 'Resposta incorreta. Tente novamente.');
+            $this->session->set_flashdata('erro','Resposta incorreta.');
         }
         redirect('questoes/view_questions');
     }
 
-    // Novo: Método para seção laboratório (alunos)
-    public function laboratorio() {
-        if ($this->session->userdata('role') !== 'aluno') {
-            redirect('professor/login');
-        }
-        $points = $this->session->userdata('points') ?? 0;
-        $pieces = floor($points / 5); // 1 peça a cada 5 pontos
-        $data['pieces'] = $pieces;
-        $this->load->view('student/laboratorio', $data);
-    }
-
-    // Método privado para processar upload (reutilizável)
+    // UPLOAD com criação de pasta
     private function _process_upload() {
         if (!empty($_FILES['imagem']['name'])) {
-            $config['upload_path'] = './uploads/questoes/';
+
+            $upload_path = './uploads/questoes/';
+            if (!is_dir($upload_path)) {
+                mkdir($upload_path, 0777, true);
+            }
+
+            $config['upload_path']   = $upload_path;
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['encrypt_name'] = TRUE;
-            $config['max_size'] = 2048; // Limite de 2MB
+            $config['encrypt_name']  = TRUE;
+            $config['max_size']      = 4096; // 4MB
 
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('imagem')) {
-                $uploadData = $this->upload->data();
-                return $uploadData['file_name'];
+                $d = $this->upload->data();
+                return $d['file_name'];
             } else {
-                $this->session->set_flashdata('error', $this->upload->display_errors());
+                $this->session->set_flashdata('erro', strip_tags($this->upload->display_errors()));
                 return FALSE;
             }
         }
         return NULL;
-    }
-
-    // Método privado para verificar peças do laboratório
-    private function _check_lab_pieces() {
-        $points = $this->session->userdata('points') ?? 0;
-        if ($points % 5 === 0 && $points > 0) {
-            // Lógica adicional, ex.: salvar no banco ou notificar
-            $this->session->set_flashdata('success', 'Parabéns! Você desbloqueou uma nova peça no laboratório.');
-        }
     }
 }
