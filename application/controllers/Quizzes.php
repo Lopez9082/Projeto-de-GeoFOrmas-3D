@@ -8,7 +8,15 @@ class Quizzes extends CI_Controller {
         $this->load->model("Questao_model");
         $this->load->model("Progresso_model");
         $this->load->library("session");
+
+        // Verificação de login
+        if (!$this->session->userdata('logado')) {
+            redirect('login');
+            exit; // evita continuar executando código
+        }
     }
+
+    
 
     // 1) Página com temas
     public function index() {

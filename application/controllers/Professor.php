@@ -99,9 +99,6 @@ class Professor extends CI_Controller {
 
             $this->Questao_model->inserir($dados);
 
-
-            $this->Questao_model->inserir($dados);
-
             $this->session->set_flashdata('sucesso', 'Questão criada com sucesso!');
             redirect('professor/questoes');
         }

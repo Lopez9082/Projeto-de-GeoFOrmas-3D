@@ -3,8 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Questao_model extends CI_Model {
 
+        protected $table = "questoes";
+
     public function __construct() {
         parent::__construct();
+
     }
 
     // 🔹 LISTAR TODAS AS QUESTÕES DO PROFESSOR

@@ -17,7 +17,7 @@
 <body>
   <aside class="sidebar">
     <div class="logo">
-      <img src="<?= base_url('assets/images/logo_unig.png') ?>" alt="Logo">
+      <img src="<?= base_url('/images/logo_unig.png') ?>" alt="Logo">
     </div>
 
     <?php $current_url = current_url(); ?>
