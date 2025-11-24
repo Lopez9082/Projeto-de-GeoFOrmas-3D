@@ -4,7 +4,7 @@
 
 <!-- Botão Nova Questão -->
 <div class="d-flex justify-content-end mb-3">
-    <a href="<?=base_url('questoes/criar')?>" class="btn btn-success shadow-sm">
+    <a href="<?=base_url('professor/nova_questao')?>" class="btn btn-success shadow-sm">
         <i class="bi bi-plus-circle"></i> Nova Questão
     </a>
 </div>
@@ -51,16 +51,16 @@
                     </td>
 
                     <td class="text-center">
-                        <a href="<?=base_url('questoes/editar/'.$q->id)?>" 
+                        <a href="<?=base_url('professor/editar_questao/'.$q->id)?>" 
                            class="btn btn-sm btn-primary me-1">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-
-                        <a href="<?=base_url('questoes/excluir/'.$q->id)?>" 
+<!--
+                        <a href="<?=base_url('professor/excluir_questao/'.$q->id)?>" 
                            class="btn btn-sm btn-danger"
                            onclick="return confirm('Tem certeza que deseja excluir esta questão?')">
                             <i class="bi bi-trash"></i>
-                        </a>
+                        </a>-->
                     </td>
                 </tr>
             <?php endforeach; ?>
