@@ -181,6 +181,21 @@ class Professor extends CI_Controller {
     // ============================
     // EXCLUIR QUESTÃO
     // ============================
+
+    public function excluir($id) {
+        $papel = $this->session->userdata('papel');
+        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
+
+        $motivo = $this->input->post('motivo_exclusao', true);
+        if (trim($motivo) === '') {
+            $this->session->set_flashdata('erro','Informe o motivo da exclusão.');
+            redirect('questoes/excluir_confirm/'.$id);
+        }
+
+        $this->Questao_model->ocultar($id, $motivo);
+        $this->session->set_flashdata('sucesso','Questão marcada como excluída.');
+        redirect('questoes');
+    }
     public function excluir_questao($id)
     {
         $questao = $this->Questao_model->buscar($id);
@@ -190,7 +205,7 @@ class Professor extends CI_Controller {
             unlink('./uploads/questoes/'.$questao->imagem);
         }
 
-        $this->Questao_model->excluir($id);
+        $this->Questao_model->ocultar($id);
 
         $this->session->set_flashdata('sucesso', 'Questão excluída!');
         redirect('professor/questoes');

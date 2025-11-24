@@ -5,7 +5,7 @@ class Questoes extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Questoes_model');
+        $this->load->model('Questao_model');
         $this->load->library(['session', 'upload', 'form_validation']);
         $this->load->helper(['security','url','form']);
 
@@ -25,7 +25,7 @@ class Questoes extends CI_Controller {
 
         $usuario_id = $this->session->userdata('usuario_id'); // caso queira filtrar por criador
         // listar apenas não-excluídas
-        $data['lista'] = $this->Questoes_model->get_all_by_creator($usuario_id);
+        $data['lista'] = $this->Questao_model->get_all_by_creator($usuario_id);
         $this->load->view('questoes/index', $data);
     }
 
@@ -70,7 +70,7 @@ class Questoes extends CI_Controller {
         $post['criado_em'] = date('Y-m-d H:i:s');
 
         // campos esperados pela tabela: tema_id, nivel, enunciado, imagem, alternativa_a..e, correta, feedback_pedagogico, criado_por
-        $insert_id = $this->Questoes_model->insert($post);
+        $insert_id = $this->Questao_model->insert($post);
         if ($insert_id) {
             $this->session->set_flashdata('sucesso','Questão cadastrada com sucesso.');
         } else {
@@ -84,7 +84,7 @@ class Questoes extends CI_Controller {
         $papel = $this->session->userdata('papel');
         if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
 
-        $questao = $this->Questoes_model->get($id);
+        $questao = $this->Questao_model->get($id);
         if (!$questao) show_404();
 
         $data['questao'] = $questao;
@@ -117,7 +117,7 @@ class Questoes extends CI_Controller {
         }
         if ($upload !== NULL) $post['imagem'] = $upload;
 
-        $ok = $this->Questoes_model->update($id, $post);
+        $ok = $this->Questao_model->update($id, $post);
         $this->session->set_flashdata($ok ? 'sucesso' : 'erro', $ok ? 'Atualizado.' : 'Erro ao atualizar.');
         redirect('questoes');
     }
@@ -127,7 +127,7 @@ class Questoes extends CI_Controller {
         $papel = $this->session->userdata('papel');
         if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
 
-        $data['q'] = $this->Questoes_model->get($id);
+        $data['q'] = $this->Questao_model->get($id);
         if (!$data['q']) show_404();
         $this->load->view('questoes/excluir_confirm', $data);
     }
@@ -142,7 +142,7 @@ class Questoes extends CI_Controller {
             redirect('questoes/excluir_confirm/'.$id);
         }
 
-        $this->Questoes_model->excluir_logicamente($id, $motivo);
+        $this->Questao_model->excluir_logicamente($id, $motivo);
         $this->session->set_flashdata('sucesso','Questão marcada como excluída.');
         redirect('questoes');
     }
@@ -152,7 +152,7 @@ class Questoes extends CI_Controller {
         // qualquer aluno logado
         if ($this->session->userdata('papel') !== 'aluno') redirect('login');
 
-        $data['questions'] = $this->Questoes_model->get_all_active();
+        $data['questions'] = $this->Questao_model->get_all_active();
         $this->load->view('student/view_questions', $data);
     }
 
@@ -168,7 +168,7 @@ class Questoes extends CI_Controller {
             redirect('questoes/view_questions');
         }
 
-        $correct = $this->Questoes_model->check_answer($question_id, $answer);
+        $correct = $this->Questao_model->check_answer($question_id, $answer);
         if ($correct) {
             $this->session->set_flashdata('sucesso','Resposta correta!');
         } else {
