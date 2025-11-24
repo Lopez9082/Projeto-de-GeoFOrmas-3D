@@ -25,7 +25,7 @@
       <a href="<?= site_url('painel') ?>" class="<?= strpos($current_url, site_url('painel')) !== false ? 'active' : '' ?>">Início</a>
       <a href="<?= site_url('quizzes') ?>" class="<?= strpos($current_url, site_url('quizzes')) !== false ? 'active' : '' ?>">🎲 Quizzes</a>
       <a href="<?= site_url('laboratorio') ?>" class="<?= strpos($current_url, site_url('laboratorio')) !== false ? 'active' : '' ?>">🧪 Laboratório</a>
-      <a href="<?= site_url('painel/historico') ?>" class="<?= strpos($current_url, site_url('painel/historico')) !== false ? 'active' : '' ?>">Histórico</a>
+     <!-- <a href="<?= site_url('painel/historico') ?>" class="<?= strpos($current_url, site_url('painel/historico')) !== false ? 'active' : '' ?>">Histórico</a>-->
       <?php if ($this->session->userdata('papel') == 'professor' || $this->session->userdata('papel') == 'licenciado'): ?>
         <a href="<?= site_url('admin/lista_questoes') ?>" class="<?= strpos($current_url, site_url('admin')) !== false ? 'active' : '' ?>">Gerenciar Questões</a>
       <?php endif; ?>

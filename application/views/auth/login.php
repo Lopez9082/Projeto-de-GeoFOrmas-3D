@@ -157,7 +157,7 @@
         </form>
 
         <a class="link-small" href="<?php echo site_url('registrar'); ?>">Criar conta</a>
-        <a class="link-small" href="<?php echo site_url('recuperar-senha'); ?>">Esqueci minha senha</a>
+       <!-- <a class="link-small" href="<?php echo site_url('recuperar-senha'); ?>">Esqueci minha senha</a>-->
     </div>
 </body>
 </html>
