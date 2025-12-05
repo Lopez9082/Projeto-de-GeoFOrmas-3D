@@ -12,12 +12,25 @@ class Questao_model extends CI_Model {
 
     // 🔹 LISTAR TODAS AS QUESTÕES DO PROFESSOR
     public function listar_do_professor($professor_id)
-    {
-        return $this->db
-            ->where('criado_por', $professor_id)
-            ->get('questoes')
-            ->result();
-    }
+{
+    return $this->db
+        ->select("questoes.*, temas.titulo AS tema_titulo")
+        ->from("questoes")
+        ->join("temas", "temas.id = questoes.tema_id", "left")
+        ->where("questoes.criado_por", $professor_id)
+        ->order_by("questoes.id", "DESC")
+        ->order_by("
+    CASE 
+        WHEN nivel = 'Ensino Fundamental I' THEN 1
+        WHEN nivel = 'Ensino Fundamental II' THEN 2
+        WHEN nivel = 'Ensino Medio' THEN 3
+        ELSE 4
+    END
+", "ASC")
+        ->get()
+        ->result();
+}
+
 
     // 🔹 INSERIR NOVA QUESTÃO
     public function inserir($dados)
@@ -65,6 +78,7 @@ class Questao_model extends CI_Model {
         return $this->db
             ->where("tema_id", $tema)
             ->where("nivel", $nivel)
+            ->where("excluida", 0)
             ->order_by("RAND()")
             ->limit(5)
             ->get("questoes")
