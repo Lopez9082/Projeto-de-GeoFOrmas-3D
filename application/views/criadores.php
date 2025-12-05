@@ -102,6 +102,7 @@
                 <img class="creator-img" src="<?= base_url('assets/fotos/Jose.jpg') ?>" alt="Criador 1">
                 <div class="creator-name">José Augusto</div>
                 <div class="function-creator">Função: Fullstack</div>
+                <div class="function-creator">Curso: Ciência da computação</div>
                 <div class="icons">
                     <a class="linkedin" href="https://www.linkedin.com/in/josé-augusto-937781364" target="_blank">
                         <i class="fa-brands fa-linkedin"></i>
@@ -114,14 +115,15 @@
 
             <!-- CRIADOR 2 -->
             <div class="creator-card">
-                <img class="creator-img" src="<?= base_url('assets/fotos/') ?>" alt="Criador 2">
+                <img class="creator-img" src="<?= base_url('assets/fotos/Denise_Moraes') ?>" alt="Criador 2">
                 <div class="creator-name">Denise Moraes</div>
                 <div class="function-creator">Função: Professora</div>
+                <div class="function-creator">Curso: Coordenadora Ciência da computação</div>
                 <div class="icons">
-                    <a class="linkedin" href="https://linkedin.com" target="_blank">
+                    <a class="linkedin" href="https://www.linkedin.com/in/denise-moraes-do-nascimento-vieira-4206763b/" target="_blank">
                         <i class="fa-brands fa-linkedin"></i>
                     </a>
-                    <a class="github" href="https://github.com" target="_blank">
+                    <a class="github" href="https://github.com/deniaulainfead23" target="_blank">
                         <i class="fa-brands fa-github"></i>
                     </a>
                 </div>
@@ -132,11 +134,12 @@
                 <img class="creator-img" src="<?= base_url('assets/fotos/') ?>" alt="Criador 3">
                 <div class="creator-name">Beatrix Ximenes</div>
                 <div class="function-creator">Função: Back-end</div>
+                <div class="function-creator">Curso: Ciência da computação</div>
                 <div class="icons">
-                    <a class="linkedin" href="https://linkedin.com" target="_blank">
+                    <a class="linkedin" href="https://www.linkedin.com/in/beatriz-ximenes-6b09b4251/" target="_blank">
                         <i class="fa-brands fa-linkedin"></i>
                     </a>
-                    <a class="github" href="https://github.com" target="_blank">
+                    <a class="github" href="https://github.com/Beatriz-Ximenes" target="_blank">
                         <i class="fa-brands fa-github"></i>
                     </a>
                 </div>
@@ -147,12 +150,13 @@
                 <img class="creator-img" src="<?= base_url('assets/fotos/') ?>" alt="Criador 4">
                 <div class="creator-name">Elivelton Silva</div>
                 <div class="function-creator">Função: Back-end</div>
+                <div class="function-creator">Curso: Ciência da computação</div>
 
                 <div class="icons">
                     <a class="linkedin" href="https://linkedin.com" target="_blank">
                         <i class="fa-brands fa-linkedin"></i>
                     </a>
-                    <a class="github" href="https://github.com" target="_blank">
+                    <a class="github" href="https://github.com/Eli-th" target="_blank">
                         <i class="fa-brands fa-github"></i>
                     </a>
                 </div>
