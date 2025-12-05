@@ -196,6 +196,7 @@ class Professor extends CI_Controller {
         $this->session->set_flashdata('sucesso','Questão marcada como excluída.');
         redirect('questoes');
     }
+
     public function excluir_questao($id)
     {
         $questao = $this->Questao_model->buscar($id);
@@ -255,33 +256,49 @@ public function logout()
 }
 
 
+
 public function ocultar_questao($id)
 {
-    $questao = $this->Questao_model->buscar($id);
+    // protege rota
+    $prof = $this->session->userdata('professor');
+    if (!$prof) {
+        // se você usa outra chave (logado / papel), ajuste aqui
+        redirect('professor/login');
+        return;
+    }
 
+    $questao = $this->Questao_model->buscar($id);
     if (!$questao) {
         show_404();
         return;
     }
 
+    // Se vier POST -> processa
     if ($this->input->post()) {
+        $motivo = $this->input->post('motivo', true);
+        if (trim($motivo) === '') {
+            $this->session->set_flashdata('erro', 'Informe o motivo da exclusão.');
+            redirect('professor/ocultar_questao/'.$id);
+            return;
+        }
 
-        $motivo = $this->input->post('motivo');
+        $ok = $this->Questao_model->ocultar($id, $motivo);
+        if ($ok) {
+            $this->session->set_flashdata('sucesso', 'Questão ocultada com sucesso.');
+        } else {
+            $this->session->set_flashdata('erro', 'Erro ao ocultar a questão. Tente novamente.');
+        }
 
-        $this->Questao_model->ocultar($id, $motivo);
-
-        $this->session->set_flashdata('sucesso', 'Questão oculta com sucesso!');
         redirect('professor/questoes');
         return;
     }
 
+    // GET -> mostra o formulário de confirmação
     $data['questao'] = $questao;
-
     $this->load->view('professor/header');
     $this->load->view('professor/excluir_confirmacao', $data);
     $this->load->view('professor/footer');
 }
-
 
 
 

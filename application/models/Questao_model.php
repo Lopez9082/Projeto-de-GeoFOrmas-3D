@@ -54,11 +54,12 @@ class Questao_model extends CI_Model {
      public function listar_por_tema($tema_id){
         return $this->db
             ->where('tema_id', $tema_id)
-            ->where('excluida', 0)
             ->order_by('criado_em','ASC')
             ->get($this->table)
             ->result();
     }
+
+    
 
     public function buscarQuestoes($tema, $nivel) {
         return $this->db

@@ -9,11 +9,7 @@ class Questoes extends CI_Controller {
         $this->load->library(['session', 'upload', 'form_validation']);
         $this->load->helper(['security','url','form']);
 
-        // Verificação de login básica (compatível com seu Auth: 'logado' + 'papel')
-        if (!$this->session->userdata('logado')) {
-            redirect('login');
-            exit;
-        }
+
     }
 
     // Listar questões (apenas professores/licenciados/admin)
@@ -121,30 +117,28 @@ class Questoes extends CI_Controller {
         $this->session->set_flashdata($ok ? 'sucesso' : 'erro', $ok ? 'Atualizado.' : 'Erro ao atualizar.');
         redirect('questoes');
     }
+    public function excluir_confirm($id)
+{
+    $papel = $this->session->userdata('papel');
+    if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
+
+    $data['questao'] = $this->Questao_model->buscar($id);
+    if (!$data['questao']) show_404();
+
+    $this->load->view('professor/excluir_confirmacao', $data);
+}
+
 
     // Excluir logicamente com justificativa (mostre um form antes)
-    public function excluir_confirm($id) {
-        $papel = $this->session->userdata('papel');
-        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
-
-        $data['q'] = $this->Questao_model->get($id);
-        if (!$data['q']) show_404();
-        $this->load->view('questoes/excluir_confirm', $data);
-    }
 
     public function excluir($id) {
-        $papel = $this->session->userdata('papel');
-        if (!in_array($papel, ['professor','licenciado','admin'])) redirect('login');
+        $prof = $this->session->userdata('professor');
+        if (!$prof) redirect('professor/login');
 
-        $motivo = $this->input->post('motivo_exclusao', true);
-        if (trim($motivo) === '') {
-            $this->session->set_flashdata('erro','Informe o motivo da exclusão.');
-            redirect('questoes/excluir_confirm/'.$id);
-        }
+        $data['questao'] = $this->Questao_model->buscar($id);
+        if (!$data['questao']) show_404();
 
-        $this->Questao_model->excluir_logicamente($id, $motivo);
-        $this->session->set_flashdata('sucesso','Questão marcada como excluída.');
-        redirect('questoes');
+        $this->load->view('professor/excluir_confirmacao', $data);
     }
 
     // VIEW para alunos (simples)
