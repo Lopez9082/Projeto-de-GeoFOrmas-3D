@@ -1,10 +1,21 @@
+<?php
+// Este é o conteúdo da view para CodeIgniter 3. Salve este arquivo como application/views/home.php
+// Certifique-se de que o controlador carregue esta view, por exemplo: $this->load->view('home');
+// Para PHP 8.1 e CI3, assumimos compatibilidade (CI3 suporta até PHP 7.4, mas pode funcionar com 8.1 com ajustes; teste em ambiente de desenvolvimento).
+// Melhorias: Estrutura MVC, segurança com base_url/site_url, responsividade aprimorada, acessibilidade, performance (CSS/JS embutidos para simplicidade), SEO básico, e design moderno com variáveis CSS.
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MathQuizz: Aprenda matemática de forma divertida com quizzes interativos, XP e rankings.">
+    <meta name="keywords" content="matemática, quiz, aprendizado, jogos educacionais">
     <title>MathQuizz - Início</title>
-
+    <!-- Font Poppins do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Preload da imagem para melhor performance -->
+    <link rel="preload" href="https://img.freepik.com/vetores-premium/icone-de-simbolos-matematicos_1186366-125286.jpg" as="image">
     <style>
         /* ------------------ RESET ------------------ */
         * {
@@ -14,10 +25,22 @@
             font-family: "Poppins", sans-serif;
         }
 
+        /* Variáveis CSS para manutenção fácil */
+        :root {
+            --primary-color: #0066ff;
+            --primary-hover: #0050d3;
+            --bg-color: #f5f7fb;
+            --text-color: #222;
+            --text-secondary: #555;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-footer: rgba(0, 0, 0, 0.06);
+        }
+
         body {
-            background: #f5f7fb;
-            color: #222;
+            background: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         /* ------------------ HEADER ------------------ */
@@ -31,13 +54,13 @@
             position: fixed;
             top: 0;
             z-index: 999;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px var(--shadow);
         }
 
         .logo {
             font-size: 26px;
             font-weight: 700;
-            color: #0066ff;
+            color: var(--primary-color);
         }
 
         nav ul {
@@ -50,24 +73,26 @@
             text-decoration: none;
             font-weight: 500;
             color: #444;
-            transition: 0.3s;
+            transition: color 0.3s ease;
         }
 
         nav ul li a:hover {
-            color: #0066ff;
+            color: var(--primary-color);
         }
 
         .btn-primary {
             padding: 10px 18px;
-            background: #0066ff;
+            background: var(--primary-color);
             color: white !important;
             border-radius: 8px;
             font-weight: 600;
-            transition: 0.3s;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-primary:hover {
-            background: #0050d3;
+            background: var(--primary-hover);
         }
 
         /* MOBILE MENU */
@@ -75,6 +100,7 @@
             display: none;
             font-size: 30px;
             cursor: pointer;
+            color: #444;
         }
 
         @media (max-width: 820px) {
@@ -83,12 +109,13 @@
                 top: 0;
                 right: -100%;
                 width: 60%;
-                height: 100%;
+                height: 100vh;
                 background: #fff;
                 flex-direction: column;
                 padding-top: 100px;
                 gap: 40px;
-                transition: 0.4s;
+                transition: right 0.4s ease;
+                box-shadow: -2px 0 10px var(--shadow);
             }
 
             nav ul.active {
@@ -107,6 +134,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 50px;
+            min-height: 80vh;
         }
 
         .hero-text {
@@ -114,33 +142,37 @@
         }
 
         .hero-text h1 {
-            font-size: 48px;
+            font-size: clamp(32px, 5vw, 48px);
             font-weight: 700;
-            color: #222;
+            color: var(--text-color);
+            margin-bottom: 10px;
         }
 
         .hero-text p {
-            margin-top: 10px;
             font-size: 18px;
-            color: #555;
-        }
-
-        .hero-btns {
-            margin-top: 25px;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
         }
 
         .hero-btns a {
             padding: 12px 22px;
-            background: #0066ff;
+            background: var(--primary-color);
             color: white;
             text-decoration: none;
             font-size: 18px;
             border-radius: 10px;
             font-weight: 600;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .hero-btns a:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
         }
 
         .hero img {
             width: 450px;
+            max-width: 100%;
             animation: float 3s infinite ease-in-out;
         }
 
@@ -154,28 +186,31 @@
             .hero {
                 flex-direction: column;
                 text-align: center;
+                padding: 120px 20px 60px 20px;
             }
             .hero img {
                 width: 320px;
             }
         }
 
-        /* ------------------ SOBRE ------------------ */
+        /* ------------------ SECTIONS ------------------ */
         .section {
             padding: 80px 40px;
             text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .section h2 {
-            font-size: 34px;
+            font-size: clamp(28px, 4vw, 34px);
             margin-bottom: 20px;
-            color: #222;
+            color: var(--text-color);
         }
 
         .section p {
             max-width: 800px;
-            margin: auto;
-            color: #555;
+            margin: 0 auto 40px;
+            color: var(--text-secondary);
             font-size: 18px;
         }
 
@@ -191,18 +226,19 @@
             background: #fff;
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-            transition: 0.3s;
+            box-shadow: 0 4px 14px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow);
         }
 
         .feature-card h3 {
             font-size: 22px;
             margin-bottom: 10px;
-            color: #0066ff;
+            color: var(--primary-color);
         }
 
         /* ------------------ FOOTER ------------------ */
@@ -211,93 +247,105 @@
             text-align: center;
             background: #fff;
             margin-top: 40px;
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.06);
+            box-shadow: 0 -3px 10px var(--shadow-footer);
         }
 
         footer p {
             color: #666;
         }
     </style>
-
 </head>
 <body>
+    <header>
+        <div class="logo">MathQuizz</div>
+        <nav>
+            <ul id="menu">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="<?php echo site_url('criadores'); ?>">Criadores</a></li>
+                <li><a class="btn-primary" href="<?php echo site_url('auth/login'); ?>">Fazer Login</a></li>
+            </ul>
+        </nav>
+        <div class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menu">☰</div>
+    </header>
 
-<header>
-    <div class="logo">MathQuizz</div>
-
-    <nav>
-        <ul id="menu">
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#recursos">Recursos</a></li>
-            <li><a class="btn-primary" href="<?= site_url('auth/login') ?>">Fazer Login</a></li>
-        </ul>
-    </nav>
-
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-text">
-        <h1>Aprenda Matemática Jogando!</h1>
-        <p>O MathQuizz transforma exercícios matemáticos em desafios divertidos, com sistema de XP,
-            níveis, ranking e painel exclusivo para estudantes.</p>
-
-        <div class="hero-btns">
-            <a href="<?= site_url('quizzes/index') ?>">Começar Quiz</a>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Aprenda Matemática Jogando!</h1>
+            <p>O MathQuizz transforma exercícios matemáticos em desafios divertidos, com sistema de XP, níveis, ranking e painel exclusivo para estudantes.</p>
+            <div class="hero-btns">
+                <a href="<?php echo site_url('quizzes/index'); ?>" aria-label="Iniciar quiz">Começar Quiz</a>
+            </div>
         </div>
-    </div>
+        <img src="https://img.freepik.com/vetores-premium/icone-de-simbolos-matematicos_1186366-125286.jpg" alt="Ícone de símbolos matemáticos representando aprendizado interativo">
+    </section>
 
-    <img src="https://img.freepik.com/vetores-premium/icone-de-simbolos-matematicos_1186366-125286.jpg" alt="Math Image">
-</section>
+    <!-- SOBRE -->
+    <section class="section" id="sobre">
+        <h2>O que é o MathQuizz?</h2>
+        <p>
+            O MathQuizz é uma plataforma criada para ajudar estudantes a aprender matemática de forma interativa. Com quizzes dinâmicos, evolução por XP, acompanhamento de desempenho e desafios diários, o aprendizado se torna leve, visual e divertido.
+        </p>
+    </section>
 
-<!-- SOBRE -->
-<section class="section" id="sobre">
-    <h2>O que é o MathQuizz?</h2>
-    <p>
-        O MathQuizz é uma plataforma criada para ajudar estudantes a aprender matemática
-        de forma interativa. Com quizzes dinâmicos, evolução por XP,
-        acompanhamento de desempenho e desafios diários,
-        o aprendizado se torna leve, visual e divertido.
-    </p>
-</section>
-
-<!-- FEATURES -->
-<section class="section" id="recursos">
-    <h2>Recursos do Sistema</h2>
-
-    <div class="features">
-        <div class="feature-card">
-            <h3>📊 Perfil com XP</h3>
-            <p>Acompanhe sua evolução com o sistema de experiência e ranking.</p>
+    <!-- FEATURES -->
+    <section class="section" id="recursos">
+        <h2>Recursos do Sistema</h2>
+        <div class="features">
+            <div class="feature-card">
+                <h3>📊 Perfil com XP</h3>
+                <p>Acompanhe sua evolução com o sistema de experiência e ranking.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🧠 Quiz Inteligente</h3>
+                <p>Perguntas dinâmicas que se adaptam ao seu nível.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📈 Painel do Aluno</h3>
+                <p>Veja seu desempenho, desafios concluídos e áreas para melhorar.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Totalmente Responsivo</h3>
+                <p>Perfeito no computador, tablet e celular.</p>
+            </div>
         </div>
+    </section>
 
-        <div class="feature-card">
-            <h3>🧠 Quiz Inteligente</h3>
-            <p>Perguntas dinâmicas que se adaptam ao seu nível.</p>
-        </div>
+    <footer>
+        <p>MathQuizz © <?php echo date('Y'); ?> - Todos os direitos reservados</p>
+    </footer>
 
-        <div class="feature-card">
-            <h3>📈 Painel do Aluno</h3>
-            <p>Veja seu desempenho, desafios concluídos e áreas para melhorar.</p>
-        </div>
+    <script>
+        // Função para toggle do menu mobile
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            menu.classList.toggle("active");
+        }
 
-        <div class="feature-card">
-            <h3>⚡ Totalmente Responsivo</h3>
-            <p>Perfeito no computador, tablet e celular.</p>
-        </div>
-    </div>
-</section>
+        // Adicionar event listener para fechar menu ao clicar fora (melhoria de UX)
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById("menu");
+            const menuBtn = document.querySelector('.menu-btn');
+            if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.classList.remove("active");
+            }
+        });
 
-<footer>
-    <p>MathQuizz © 2025 - Todos os direitos reservados</p>
-</footer>
-
-<script>
-    function toggleMenu() {
-        document.getElementById("menu").classList.toggle("active");
-    }
-</script>
-
+        // Smooth scroll para âncoras (melhoria de navegação)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Fechar menu mobile após clique
+                document.getElementById("menu").classList.remove("active");
+            });
+        });
+    </script>
 </body>
 </html>
