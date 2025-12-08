@@ -343,7 +343,7 @@
             <ul id="menu">
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#recursos">Recursos</a></li>
-                <li><a href="#criadores">Criadores</a></li>
+                  <a href="<?= site_url('criadores'); ?>">Criadores</a>
                 <li><a class="btn-primary" href="<?php echo site_url('auth/login'); ?>">Fazer Login</a></li>
             </ul>
         </nav>
@@ -392,5 +392,3 @@
             </div>
         </div>
     </section>
-</body>
-</html>
