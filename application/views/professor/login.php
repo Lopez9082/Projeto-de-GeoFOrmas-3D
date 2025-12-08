@@ -63,9 +63,13 @@
     <h2>Professor - Login</h2>
 
     <?php if ($this->session->flashdata('erro')): ?>
-      <div class="msg-erro"><?= $this->session->flashdata('erro') ?></div>
-    <?php endif; ?>
+            <div class="msg-erro"><?php echo html_escape($this->session->flashdata('erro')); ?></div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('success')): ?>
+            <div class="msg-success"><?php echo html_escape($this->session->flashdata('success')); ?></div>
+        <?php endif; ?>
 
+  
     <form method="post" action="<?= site_url('professor/login') ?>">
       <input class="input" type="email" name="email" placeholder="E-mail" required>
       <input class="input" type="password" name="senha" placeholder="Senha" required>

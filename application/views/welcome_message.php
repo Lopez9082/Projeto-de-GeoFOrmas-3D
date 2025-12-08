@@ -16,6 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Preload da imagem para melhor performance -->
     <link rel="preload" href="https://img.freepik.com/vetores-premium/icone-de-simbolos-matematicos_1186366-125286.jpg" as="image">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         /* ------------------ RESET ------------------ */
         * {
@@ -253,6 +255,85 @@
         footer p {
             color: #666;
         }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        .creators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .creator-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+            transition: .3s;
+        }
+
+        .creator-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .creator-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0066ff;
+        }
+
+        .creator-name {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .icons {
+            margin-top: 12px;
+        }
+
+        .icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 28px;
+            transition: .3s;
+        }
+
+        .icons a:hover {
+            transform: scale(1.15);
+            opacity: .8;
+        }
+
+        .linkedin {
+            color: #0A66C2;
+        }
+
+        .github {
+            color: #000;
+        }
+    
     </style>
 </head>
 <body>
@@ -262,7 +343,7 @@
             <ul id="menu">
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#recursos">Recursos</a></li>
-                <li><a href="<?php echo site_url('criadores'); ?>">Criadores</a></li>
+                <li><a href="#criadores">Criadores</a></li>
                 <li><a class="btn-primary" href="<?php echo site_url('auth/login'); ?>">Fazer Login</a></li>
             </ul>
         </nav>
@@ -311,41 +392,5 @@
             </div>
         </div>
     </section>
-
-    <footer>
-        <p>MathQuizz © <?php echo date('Y'); ?> - Todos os direitos reservados</p>
-    </footer>
-
-    <script>
-        // Função para toggle do menu mobile
-        function toggleMenu() {
-            const menu = document.getElementById("menu");
-            menu.classList.toggle("active");
-        }
-
-        // Adicionar event listener para fechar menu ao clicar fora (melhoria de UX)
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById("menu");
-            const menuBtn = document.querySelector('.menu-btn');
-            if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
-                menu.classList.remove("active");
-            }
-        });
-
-        // Smooth scroll para âncoras (melhoria de navegação)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-                // Fechar menu mobile após clique
-                document.getElementById("menu").classList.remove("active");
-            });
-        });
-    </script>
 </body>
 </html>

@@ -34,8 +34,8 @@ class Professor extends CI_Controller {
                 redirect('professor/dashboard');
 
             } else {
-                $data['erro'] = "Email ou senha incorretos";
-            }
+                $this->session->set_flashdata('erro', 'E-mail ou senha incorretos');
+                redirect('professor/login');            }
         }
 
         $this->load->view('professor/login');
