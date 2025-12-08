@@ -797,7 +797,7 @@
     </div>
     <div>
    <section id="ods" class="ods-festival fade-in">
-    <h1>ODS que o Festival abraça</h1>
+    <h1>ODS</h1>
 
     <!-- ODS 4 -->
     <div class="ods-item">
