@@ -82,10 +82,11 @@ class Auth extends CI_Controller {
 
             // cria progresso inicial
             $this->db->insert('progresso_usuario', [
-                'usuario_id'    => $id,
-                'pontuacao'     => 0,
-                'recursos_json' => '{}'
-            ]);
+            'usuario_id'           => $id,
+            'xp_total'             => 0,
+            'funcionalidades_json' => '{}'
+        ]);
+
 
             // login automático
             $usuario = $this->Usuario_model->buscar_por_email($email);

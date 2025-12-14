@@ -74,6 +74,57 @@
             font-size: 26px;
         }
 
+        /* ===== BOTÃO MENU ===== */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* Ajusta header */
+.top-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+
+    body {
+        display: block;
+    }
+
+    /* Sidebar escondida */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        width: 230px;
+        z-index: 999;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Conteúdo ocupa tudo */
+    .conteudo {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+
+    /* Botão aparece */
+    .menu-toggle {
+        display: block;
+    }
+}
+
+
     </style>
 </head>
 <body>
@@ -92,6 +143,15 @@
 <div class="conteudo">
 
     <div class="top-header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>   
         <h1>Painel do Professor</h1>
     </div>
     
+
+<script>
+document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.querySelector('.sidebar').classList.remove('active');
+    });
+});
+</script>

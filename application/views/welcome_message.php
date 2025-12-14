@@ -525,6 +525,252 @@
         margin: 0 auto;
     }
 }
+
+/* ----------- SOBRE ELEGANTE ----------- */
+.sobre-elegante {
+    background: linear-gradient(180deg, #f8fbff, #ffffff);
+}
+
+.sobre-header {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.sobre-header h2 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.sobre-header p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.sobre-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.sobre-card {
+    background: #ffffff;
+    padding: 35px 30px;
+    border-radius: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform .3s ease, box-shadow .3s ease;
+    position: relative;
+}
+
+.sobre-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+}
+
+.sobre-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.sobre-card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+.sobre-card p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.sobre-card ul {
+    padding-left: 18px;
+}
+
+.sobre-card ul li {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* Card em destaque */
+.sobre-card.destaque {
+    background: linear-gradient(135deg, #0066ff, #00b4ff);
+    color: #ffffff;
+}
+
+.sobre-card.destaque h3,
+.sobre-card.destaque p {
+    color: #ffffff;
+}
+
+.sobre-card.destaque ul li {
+    color: #ffffff;
+}
+
+.sobre-card.destaque .sobre-icon {
+    background: #ffffff;
+    color: #0066ff;
+}
+
+/* =========================
+   AJUSTES RESPONSIVOS GLOBAIS
+   ========================= */
+
+@media (max-width: 1200px) {
+    .section {
+        padding: 70px 30px;
+    }
+}
+
+@media (max-width: 992px) {
+    header {
+        padding: 16px 24px;
+    }
+
+    .hero {
+        gap: 30px;
+        padding-top: 120px;
+    }
+
+    .hero-text h1 {
+        font-size: 36px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    .sobre-header h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* HERO */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 110px 20px 60px;
+    }
+
+    .hero img {
+        width: 260px;
+    }
+
+    /* SECTIONS */
+    .section {
+        padding: 60px 20px;
+    }
+
+    .section h2 {
+        font-size: 24px;
+    }
+
+    .section p {
+        font-size: 16px;
+    }
+
+    /* SOBRE */
+    .sobre-cards {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .sobre-card {
+        padding: 28px 24px;
+    }
+
+    /* FEATURES */
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    /* CRIADORES */
+    .creator-img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .creator-name {
+        font-size: 20px;
+    }
+
+    .icons a {
+        font-size: 26px;
+    }
+
+    /* ODS */
+    .ods-item {
+        grid-template-columns: 1fr !important;
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    .ods-item img {
+        max-width: 260px;
+        margin: 0 auto;
+    }
+
+    .ods-text h3 {
+        font-size: 20px;
+    }
+
+    .ods-text p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    header {
+        padding: 14px 18px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .hero-text h1 {
+        font-size: 28px;
+    }
+
+    .hero-btns a {
+        font-size: 16px;
+        padding: 10px 18px;
+    }
+
+    .sobre-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+    }
+
+    .sobre-card h3 {
+        font-size: 18px;
+    }
+
+    .sobre-card p,
+    .sobre-card ul li {
+        font-size: 15px;
+    }
+}
+
+
     
     </style>
 </head>
@@ -558,12 +804,83 @@
 
 
     <!-- SOBRE -->
-    <section class="section" id="sobre">
+    <!-- SOBRE -->
+<section class="section sobre-elegante" id="sobre">
+
+    <div class="sobre-header">
         <h2>O que é o MathQuizz?</h2>
         <p>
-            O MathQuizz é uma plataforma criada para ajudar estudantes a aprender matemática de forma interativa. Com quizzes dinâmicos, evolução por XP, acompanhamento de desempenho e desafios diários, o aprendizado se torna leve, visual e divertido.
+            Um projeto educacional interdisciplinar que une Matemática, Tecnologia e Pedagogia
+            para transformar o ensino por meio de soluções digitais acessíveis.
         </p>
-    </section>
+    </div>
+
+    <div class="sobre-cards">
+
+        <!-- CARD 1 -->
+        <div class="sobre-card">
+            <div class="sobre-icon">
+                <i class="fa-solid fa-flask"></i>
+            </div>
+            <h3>O Projeto</h3>
+            <p>
+                O MathQuizz integra o Programa de Iniciação Científica (PIC) da Universidade Iguaçu (UNIG).
+                A pesquisa teve início em 2024, encerrando-se em 2025, com divulgação técnica prevista para 2026.
+            </p>
+            <p>
+                O projeto promove a articulação entre diferentes áreas do conhecimento, fortalecendo
+                a aplicação da tecnologia no ensino da Matemática.
+            </p>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="sobre-card">
+            <div class="sobre-icon">
+                <i class="fa-solid fa-people-arrows"></i>
+            </div>
+            <h3>Interdisciplinaridade</h3>
+            <ul>
+                <li><strong>Matemática:</strong> organização dos conteúdos, atividades e coerência pedagógica;</li>
+                <li><strong>Computação:</strong> desenvolvimento dos aplicativos, design e acessibilidade;</li>
+                <li><strong>Pedagogia:</strong> práticas inclusivas e fundamentos didáticos.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="sobre-card">
+            <div class="sobre-icon">
+                <i class="fa-solid fa-school"></i>
+            </div>
+            <h3>Impacto nas Escolas</h3>
+            <ul>
+                <li>Ampliação do acesso à educação de qualidade;</li>
+                <li>Facilitação da aprendizagem matemática;</li>
+                <li>Maior engajamento e autonomia dos estudantes;</li>
+                <li>Apoio à inovação pedagógica;</li>
+                <li>Redução das desigualdades educacionais.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="sobre-card destaque">
+            <div class="sobre-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h3>Formação Acadêmica</h3>
+            <p>
+                Para os estudantes participantes, o projeto proporciona uma vivência real de pesquisa científica,
+                desenvolvimento técnico e pedagógico, além de fortalecer o portfólio acadêmico e profissional.
+            </p>
+            <p>
+                Essa experiência amplia as oportunidades de atuação no ensino, na tecnologia educacional
+                e na pesquisa acadêmica.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
 
     <!-- FEATURES -->
     <section class="section" id="recursos">
@@ -797,7 +1114,7 @@
     </div>
     <div>
    <section id="ods" class="ods-festival fade-in">
-    <h1>ODS</h1>
+    <h1>ODSx</h1>
 
     <!-- ODS 4 -->
     <div class="ods-item">

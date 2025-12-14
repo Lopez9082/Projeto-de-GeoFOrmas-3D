@@ -29,7 +29,7 @@
     }
 
     input {
-        width: 100%;
+        width: 94%;
         padding: 12px;
         margin-bottom: 15px;
         border: 1px solid #ccc;
