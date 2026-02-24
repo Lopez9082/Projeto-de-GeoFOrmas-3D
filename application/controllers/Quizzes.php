@@ -108,7 +108,7 @@ class Quizzes extends CI_Controller {
     }
 
     // 6) Tela final com resumo completo
-    public function final() {
+    public function finazar() {
         $pontos    = $this->session->userdata("pontos");
         $historico = $this->session->userdata("historico");
         $usuario_id = $this->session->userdata("usuario_id"); // id do usuário logado
