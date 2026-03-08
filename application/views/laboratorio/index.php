@@ -7,25 +7,23 @@
   <div class="stat-val purple"><?= $progresso ? (int)$progresso->xp_total : 0 ?></div>
 </div>
 
-<!-- RECURSOS -->
-<div class="card">
-  <h3 style="margin-bottom:16px">Ferramentas Disponíveis</h3>
-  <?php if (empty($funcs)): ?>
-    <div style="text-align:center;padding:32px 20px">
-      <div style="font-size:2.5rem;margin-bottom:12px">🔒</div>
-      <p style="color:var(--text-dim);font-family:var(--font-mono);font-size:.82rem">Nenhum recurso desbloqueado ainda.</p>
-      <p style="color:var(--text-dim);font-size:.9rem;margin-top:8px">Ganhe XP resolvendo quizzes para desbloquear ferramentas!</p>
-      <a href="<?= site_url('quizzes') ?>" class="btn btn-primary" style="margin-top:18px">🎲 Jogar Quiz</a>
-    </div>
-  <?php else: ?>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <?php foreach ($funcs as $f): ?>
-        <div style="background:rgba(0,245,255,.04);border:1px solid rgba(0,245,255,.2);border-radius:var(--radius);padding:14px 18px;display:flex;align-items:center;gap:12px">
-          <span style="color:var(--neon-green);font-size:1.2rem">⚡</span>
-          <span style="font-weight:500"><?= html_escape($f) ?></span>
-          <span class="badge b-green" style="margin-left:auto">ATIVO</span>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  <?php endif; ?>
+
+<!-- CERTIFICADOS -->
+<div class="card" style="margin-top:22px">
+  <h3>🏅 Certificados Conquistados</h3>
+
+<?php if (empty($certificados)): ?>
+  <p>Nenhum certificado conquistado ainda.</p>
+<?php endif; ?>
+
+<?php foreach ($certificados as $c): ?>
+  <div style="margin-top:12px">
+    🎓 <strong><?= $c->titulo ?></strong>
+    (<?= $c->xp_minimo ?> XP)
+    <a href="<?= base_url($c->arquivo_pdf) ?>" target="_blank" class="btn btn-primary">
+      📄 Baixar PDF
+    </a>
+  </div>
+<?php endforeach; ?>
 </div>
+

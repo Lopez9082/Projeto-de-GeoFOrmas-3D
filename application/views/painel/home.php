@@ -76,6 +76,6 @@
   <h3 style="margin-bottom:16px">Ações Rápidas</h3>
   <div style="display:flex;flex-wrap:wrap;gap:12px">
     <a href="<?= site_url('quizzes') ?>" class="btn btn-primary">🎲 Jogar Quiz</a>
-    <a href="<?= site_url('laboratorio') ?>" class="btn btn-secondary">🧪 Laboratório</a>
+    <a href="<?= site_url('laboratorio') ?>" class="btn btn-secondary">🧪 Certificados</a>
   </div>
 </div>

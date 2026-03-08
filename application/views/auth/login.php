@@ -7,6 +7,37 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    
+.hero-img{
+  width: 70%;
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 18px rgba(0,245,255,.6))
+    drop-shadow(0 0 40px rgba(191,0,255,.4));
+}
+
+
+.hero-img-wrap{
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:3px solid var(--cyan);
+
+  box-shadow:
+    0 0 12px var(--cyan),
+    0 0 40px rgba(0,245,255,.6);
+
+  animation: float 4s ease-in-out infinite;
+}
+
 :root{
   --bg:#03020a;--bg-card:#0e0c24;--bg-card2:#130f2a;
   --cyan:#00f5ff;--pink:#ff00c8;--green:#39ff14;--purple:#bf00ff;--yellow:#ffe500;
@@ -62,11 +93,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 }
 @keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,22%,24%,55%{opacity:.55}}
 .brand-sub{font-family:var(--fm);font-size:.72rem;color:var(--dim);letter-spacing:.22em;text-transform:uppercase;margin-bottom:44px}
-.hero-img{
-  width:clamp(160px,20vw,260px);margin-bottom:40px;
-  filter:drop-shadow(0 0 28px rgba(0,245,255,.4)) drop-shadow(0 0 55px rgba(191,0,255,.2));
-  animation:float 4s ease-in-out infinite;
-}
+
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 .feature-list{display:flex;flex-direction:column;gap:10px;width:100%}
 .feat{
@@ -260,7 +287,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
   html,body{overflow:auto}
   .split{flex-direction:column;height:auto;min-height:100vh}
   .panel-left{padding:32px 24px 28px;flex:none}
-  .hero-img{width:130px;margin-bottom:20px}
   .feature-list{display:none}
   .brand-sub{margin-bottom:28px}
   .panel-right{width:100%;padding:36px 22px 44px}
@@ -289,10 +315,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
     <div class="left-content">
       <div class="brand">MATHGAME</div>
       <div class="brand-sub">UNIG · NEAD · GEMATECH</div>
-      <img class="hero-img"
-           src="https://img.freepik.com/vetores-premium/icone-de-simbolos-matematicos_1186366-125286.jpg"
-           alt="Matemática">
-      <div class="feature-list">
+      <div class="hero-img-wrap">
+        <img class="hero-img" src="<?= base_url('uploads/Logo_mathgame.png') ?>" alt="Símbolos matemáticos">
+      </div>
         <div class="feat"><span class="feat-icon">🎲</span><span class="feat-text"><strong>Quizzes por nível</strong> — Fundamental I, II e Médio</span></div>
         <div class="feat"><span class="feat-icon">⚡</span><span class="feat-text"><strong>Sistema de XP</strong> — evolua e desbloqueie recursos</span></div>
         <div class="feat"><span class="feat-icon">🏆</span><span class="feat-text"><strong>Badges e conquistas</strong> — colete ao acertar questões</span></div>

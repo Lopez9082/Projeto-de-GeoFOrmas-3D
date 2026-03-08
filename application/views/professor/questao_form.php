@@ -1,3 +1,7 @@
+<head>
+  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame-theme/professor/questao_form.css') ?>">
+
+</head>
 <div style="max-width:860px;margin:0 auto">
 
   <h2 style="margin-bottom:6px"><?= isset($questao) ? 'EDITAR QUESTÃO' : 'NOVA QUESTÃO' ?></h2>
@@ -28,7 +32,7 @@
         <div>
           <label>Nível</label>
           <select name="nivel" required>
-            <option value="Ensino Fundamental I"  <?= isset($questao) && $questao->nivel == 'Ensino Fundamental I'  ? 'selected' : '' ?>>Ensino Fundamental I</option>
+          <option value="Ensino Fundamental I"  <?= isset($questao) && $questao->nivel == 'Ensino Fundamental I'  ? 'selected' : '' ?>>ESCOLHA</option>
             <option value="Ensino Fundamental II" <?= isset($questao) && $questao->nivel == 'Ensino Fundamental II' ? 'selected' : '' ?>>Ensino Fundamental II</option>
             <option value="Ensino medio"          <?= isset($questao) && $questao->nivel == 'Ensino medio'          ? 'selected' : '' ?>>Ensino Médio</option>
           </select>

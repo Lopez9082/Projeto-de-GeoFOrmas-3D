@@ -20,10 +20,24 @@ class Quizzes extends CI_Controller {
 
     // 1) Página com temas
     public function index() {
+
+    $usuario_id = $this->session->userdata('usuario_id');
+
+        if (!$usuario_id) {
+            // Sessão corrompida
+            redirect('login');
+            exit;
+        }
+
         $data['temas'] = $this->Questao_model->listarTemas();
+        $progresso = $this->Progresso_model->obter($usuario_id);
+        $data['progresso'] = $progresso;
+
+
         $this->load->view("painel/header");
         $this->load->view("quizzes/temas", $data);
         $this->load->view("painel/footer");
+        $this->load->view("painel/home", $data);
     }
 
     // 2) Seleciona nível
@@ -32,6 +46,16 @@ class Quizzes extends CI_Controller {
         if (!$tema) {
             show_error("Tema não encontrado.");
         }
+
+        $usuario_id = $this->session->userdata('usuario_id');
+
+        if (!$usuario_id) {
+            // Sessão corrompida
+            redirect('login');
+            exit;
+        }
+
+
         $data['tema'] = $tema;
         $this->load->view("painel/header");
         $this->load->view("quizzes/nivel", $data);
@@ -75,6 +99,7 @@ class Quizzes extends CI_Controller {
         $this->load->view("painel/header");
         $this->load->view("quizzes/pergunta", $data);
         $this->load->view("painel/footer");
+        $this->load->view("painel/home");
     }
 
     // 5) Processa resposta
@@ -108,7 +133,7 @@ class Quizzes extends CI_Controller {
     }
 
     // 6) Tela final com resumo completo
-    public function finazar() {
+    public function final() {
         $pontos    = $this->session->userdata("pontos");
         $historico = $this->session->userdata("historico");
         $usuario_id = $this->session->userdata("usuario_id"); // id do usuário logado
@@ -122,7 +147,7 @@ class Quizzes extends CI_Controller {
         $this->load->view("painel/header");
         $this->load->view("quizzes/final", $data);
         $this->load->view("painel/footer");
-
+ 
         // Limpa sessão do quiz
         $this->session->unset_userdata(['quiz_questoes','quiz_index','pontos','historico']);
     }

@@ -10,6 +10,7 @@ class Temas extends CI_Controller {
 
         $this->load->model('Tema_model');
         $this->load->model('Questao_model');
+        $this->load->model('Progresso_model');
     }
 
     public function index(){
@@ -17,6 +18,22 @@ class Temas extends CI_Controller {
         $this->load->view('painel/header', $data);
         $this->load->view('temas/listar', $data);
         $this->load->view('painel/footer');
+
+         $usuario_id = $this->session->userdata('usuario_id');
+
+        if (!$usuario_id) {
+            // Sessão corrompida
+            redirect('login');
+            exit;
+        }
+        
+        $progresso = $this->Progresso_model->obter($usuario_id);
+        $data['progresso'] = $progresso;
+
+        $this->load->view('painel/home', $data); 
+
+
+
     }
 
     public function questoes($tema_id){

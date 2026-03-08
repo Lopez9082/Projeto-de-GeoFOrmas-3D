@@ -52,6 +52,7 @@ class Professor extends CI_Controller {
         $this->load->view('professor/header');
         $this->load->view('professor/dashboard', $data);
         $this->load->view('professor/footer');
+        
     }
 
     // ============================

@@ -32,13 +32,14 @@ class Painel extends CI_Controller
             redirect('login');
             exit;
         }
-            $progresso = $this->Progresso_model->obter($usuario_id);
+        
+        $progresso = $this->Progresso_model->obter($usuario_id);
 
         $data['nome'] = $this->session->userdata('nome');
         $data['progresso'] = $progresso;
 
         $this->load->view('painel/header', $data);
-        $this->load->view('painel/home', $data);
+        $this->load->view('painel/home', $data); 
         $this->load->view('painel/footer');
     }
 }

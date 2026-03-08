@@ -1,0 +1,75 @@
+.level-btn{
+    background:none;
+    border:none;
+    width:100%;
+    padding:0;
+}
+
+.level-card{
+
+    text-align:center;
+
+    padding:25px;
+
+    border:2px solid;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,0.02);
+
+    transition:all .3s ease;
+
+    cursor:pointer;
+}
+
+.level-card:hover{
+
+    transform:translateY(-6px) scale(1.02);
+
+    box-shadow:0 0 20px rgba(0,255,255,.2);
+}
+
+/* ICONES */
+
+.level-icon{
+
+    width:70px;
+    height:70px;
+
+    margin:0 auto 15px auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    font-size:32px;
+
+    border:2px solid;
+
+}
+
+/* FUNDAMENTAL */
+
+.icon-yellow{
+
+    color:#ffe500;
+    border-color:#ffe500;
+
+    box-shadow:
+    0 0 10px #ffe500,
+    inset 0 0 10px rgba(255,229,0,.4);
+}
+
+/* MÉDIO */
+
+.icon-pink{
+
+    color:#ff00c8;
+    border-color:#ff00c8;
+
+    box-shadow:
+    0 0 10px #ff00c8,
+    inset 0 0 10px rgba(255,0,200,.4);
+}

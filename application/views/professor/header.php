@@ -6,7 +6,7 @@
   <title>Painel do Professor — MathGame</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame-theme/professor/header.css') ?>">
 </head>
 <body>
 
