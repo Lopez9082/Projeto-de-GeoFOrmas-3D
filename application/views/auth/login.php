@@ -8,22 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     
-.hero-img{
-  width: 70%;
-  height: auto;
-
-  object-fit: contain;
-
-  filter:
-    drop-shadow(0 0 18px rgba(0,245,255,.6))
-    drop-shadow(0 0 40px rgba(191,0,255,.4));
-}
-
-
 .hero-img-wrap{
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  overflow:hidden;
 
   display:flex;
   align-items:center;
@@ -32,10 +21,17 @@
   border:3px solid var(--cyan);
 
   box-shadow:
-    0 0 12px var(--cyan),
-    0 0 40px rgba(0,245,255,.6);
+    0 0 20px var(--cyan),
+    0 0 80px rgba(0,245,255,.7);
 
-  animation: float 4s ease-in-out infinite;
+  animation:float 4s ease-in-out infinite;
+}
+
+.hero-img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
 }
 
 :root{

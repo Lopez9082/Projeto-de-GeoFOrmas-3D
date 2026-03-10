@@ -6,7 +6,7 @@
   <title>Criar Conta — MathGame</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame-theme/auth/registrar.css') ?>">
   <style>
     body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
       background-image:radial-gradient(ellipse 70% 50% at 30% 20%,rgba(0,245,255,.06) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 70% 80%,rgba(191,0,255,.07) 0%,transparent 60%);}
