@@ -15,31 +15,100 @@ class Professor extends CI_Controller {
     // LOGIN
     // ============================
     public function login()
-    {
-        if ($this->input->post()) {
+{
+    if ($this->input->post()) {
 
-            $email = $this->input->post('email');
-            $senha = $this->input->post('senha');
+        $email = $this->input->post('email');
+        $senha = $this->input->post('senha');
 
-            $professor = $this->Professor_model->autenticar($email, $senha);
+        $professor = $this->Professor_model->autenticar($email, $senha);
 
-            if ($professor) {
+        if ($professor) {
 
-                $this->session->set_userdata('professor', [
+            // 👑 ADMIN
+            if ($professor->tipo === 'admin') {
+
+                $this->session->set_userdata('admin', [
                     'id'   => $professor->id,
                     'nome' => $professor->nome,
                     'email'=> $professor->email
                 ]);
 
-                redirect('professor/dashboard');
+                redirect('admin/dashboard');
+                return;
+            }
 
-            } else {
-                $this->session->set_flashdata('erro', 'E-mail ou senha incorretos');
-                redirect('professor/login');            }
+            // 🔒 PROFESSOR NORMAL
+            if ($professor->status !== 'aprovado') {
+                $this->session->set_flashdata('erro', 'Seu cadastro está aguardando aprovação.');
+                redirect('professor/login');
+                return;
+            }
+
+            $this->session->set_userdata('professor', [
+                'id'   => $professor->id,
+                'nome' => $professor->nome,
+                'email'=> $professor->email
+            ]);
+
+            redirect('professor/dashboard');
+
+        } else {
+            $this->session->set_flashdata('erro', 'E-mail ou senha incorretos');
+            redirect('auth/login');
+        }
+    }
+
+    $this->load->view('auth/login');
+}
+
+    
+
+    // ===============================
+    // REGISTRAR
+    // ===============================
+    public function registrar(){
+
+    if ($this->session->userdata('logado')) redirect('professor/dashboard');
+
+    if ($this->input->post()) {
+
+        $nome  = $this->input->post('nome', true);
+        $email = $this->input->post('email', true);
+        $senha = $this->input->post('senha');
+        $faculdade = $this->input->post('faculdade'); 
+
+        // verifica email
+        if ($this->Professor_model->buscar_por_email($email)) {
+            $this->session->set_flashdata('erro', 'E-mail já cadastrado');
+            redirect('professor/registrar');
+            return;
         }
 
-        $this->load->view('professor/login');
+        // 🔥 CADASTRA COMO PENDENTE
+        $this->Professor_model->criar([
+            'nome'       => $nome,
+            'email'      => $email,
+            'senha'      => $senha,
+            'faculdade'  => $faculdade,
+            'status'     => 'pendente' // 👈 AQUI ESTÁ A MUDANÇA
+        ]);
+
+        // ❌ REMOVE LOGIN AUTOMÁTICO
+        // (não loga mais o professor)
+
+        // ✅ MENSAGEM DE AGUARDO
+        $this->session->set_flashdata(
+            'sucesso',
+            'Cadastro realizado com sucesso! Aguarde a liberação do administrador.'
+        );
+
+        redirect('professor/login');
+        return;
     }
+
+    $this->load->view('professor/registrar');
+}
 
     public function dashboard()
     {
@@ -120,7 +189,7 @@ class Professor extends CI_Controller {
 {
     // Protege a rota
     if (!$this->session->userdata('professor')) {
-        redirect('professorauth/login');
+        redirect('professor/login');
         return;
     }
 

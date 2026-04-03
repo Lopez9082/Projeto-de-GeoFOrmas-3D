@@ -1,7 +1,3 @@
-<?php
-// application/views/welcome_message.php
-// Landing page pública — MathGame / UNIG
-?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

@@ -37,7 +37,6 @@ class Quizzes extends CI_Controller {
         $this->load->view("painel/header");
         $this->load->view("quizzes/temas", $data);
         $this->load->view("painel/footer");
-        $this->load->view("painel/home", $data);
     }
 
     // 2) Seleciona nível
@@ -88,7 +87,7 @@ class Quizzes extends CI_Controller {
         $index    = $this->session->userdata("quiz_index");
         $questoes = $this->session->userdata("quiz_questoes");
 
-        if ($index >= 5) {
+        if ($index >= 10) {
             redirect("quizzes/final");
             return;
         }

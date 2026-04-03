@@ -1,7 +1,10 @@
 <?php
   $xp_total = $progresso ? (int)$progresso->xp_total : 0;
-  $initials  = strtoupper(substr($nome, 0, 1));
-  // Atualiza o XP na sidebar via JS
+
+  // garante que nunca seja null
+  $nome = $nome ?? 'Jogador';
+
+  $initials = strtoupper(substr($nome, 0, 1));
 ?>
 <script>
   document.querySelectorAll('#sidebar-xp, #topbar-xp').forEach(el => {
@@ -39,36 +42,46 @@
   </div>
 </div>
 
-<!-- XP BAR -->
+<!-- XP BAR + CERTIFICADO -->
 <div class="card" style="margin-bottom:22px">
   <h3>Progresso de XP</h3>
+
+  <?php
+    $xp_total = $xp_total ?? 0;
+
+    // Próximo certificado
+    $xp_proximo_cert = 1000; // você pode puxar do banco depois
+
+    $faltando = max(0, $xp_proximo_cert - $xp_total);
+    $pct = $xp_total > 0 ? min(100, round(($xp_total / $xp_proximo_cert) * 100)) : 0;
+  ?>
+
   <div class="xp-bar-wrapper">
-    <?php
-      $xp_proximo = 500;
-      $pct = $xp_total > 0 ? min(100, round(($xp_total % $xp_proximo) / $xp_proximo * 100)) : 0;
-    ?>
     <div class="xp-bar-label">
-      <span>LV <?= floor($xp_total / $xp_proximo) + 1 ?></span>
-      <span><?= $xp_total % $xp_proximo ?> / <?= $xp_proximo ?> XP</span>
+      <span>Certificado</span>
+      <span><?= $xp_total ?> / <?= $xp_proximo_cert ?> XP</span>
     </div>
+
     <div class="xp-bar-track">
       <div class="xp-bar-fill" style="width:<?= $pct ?>%"></div>
     </div>
   </div>
-  <div class="badges-row" style="margin-top:14px">
-    <?php if ($xp_total >= 100): ?>
-      <span class="badge b-cyan">🎯 Atirador</span>
-    <?php endif; ?>
-    <?php if ($xp_total >= 250): ?>
-      <span class="badge b-green">⚡ Relâmpago</span>
-    <?php endif; ?>
-    <?php if ($xp_total >= 500): ?>
-      <span class="badge b-pink">🔥 Em Chamas</span>
-    <?php endif; ?>
-    <?php if ($xp_total < 100): ?>
-      <span class="badge b-yellow">🌱 Iniciante — jogue mais para ganhar badges!</span>
+
+  <div style="margin-top:12px">
+    <?php if ($xp_total < $xp_proximo_cert): ?>
+      <span class="badge b-yellow">
+        ⚠ Faltam <?= $faltando ?> XP para desbloquear o certificado
+      </span>
+    <?php else: ?>
+      <span class="badge b-green">
+        🎉 Certificado desbloqueado!
+      </span>
     <?php endif; ?>
   </div>
+
+  <p style="margin-top:10px; font-size:.85rem; opacity:.7">
+    Complete quizzes para ganhar XP e desbloquear certificados.
+  </p>
 </div>
 
 <!-- AÇÕES RÁPIDAS -->

@@ -34,12 +34,21 @@ class Laboratorio extends CI_Controller {
             mkdir($pasta, 0777, true);
         }
 
+        $certificado_atual = null;
+        $proximo = null;
+
         foreach ($certificados as $c) {
 
-            // REGRA DE XP
+            // DEFINIR PROGRESSO
+            if ($xp >= $c->xp_minimo) {
+                $certificado_atual = $c;
+            } else {
+                if (!$proximo) $proximo = $c;
+            }
+
+            // GERAR CERTIFICADO SE TIVER XP
             if ($xp >= $c->xp_minimo) {
 
-                // verifica se já possui
                 if ($this->Certificado_model->usuario_possui($usuario_id, $c->id)) {
                     continue;
                 }
@@ -47,27 +56,31 @@ class Laboratorio extends CI_Controller {
                 $arquivo_fisico = $pasta.'cert_'.$c->id.'_'.$usuario_id.'.pdf';
                 $arquivo_db     = 'uploads/certificados/cert_'.$c->id.'_'.$usuario_id.'.pdf';
 
-                // gera certificado com DATA CORRETA
-                $this->pdf->gerar_certificado(
-                    $nome,
-                    $c->titulo,
-                    $c->descricao,
-                    $arquivo_fisico,
-                    date('Y-m-d H:i:s')
-                );
+                // EVITA ERRO DO AUTOLOAD
+                if (method_exists($this->pdf, 'gerar_certificado')) {
 
-                // salva no banco
-                $this->Certificado_model->salvar(
-                    $usuario_id,
-                    $c->id,
-                    $arquivo_db
-                );
+                    $this->pdf->gerar_certificado(
+                        $nome,
+                        $c->titulo,
+                        $c->descricao,
+                        $arquivo_fisico,
+                        date('Y-m-d H:i:s')
+                    );
+
+                    $this->Certificado_model->salvar(
+                        $usuario_id,
+                        $c->id,
+                        $arquivo_db
+                    );
+                }
             }
         }
 
-        // lista certificados do usuário
         $data['certificados'] = $this->Certificado_model->listar_usuario($usuario_id);
         $data['progresso']    = $progresso;
+        $data['xp']           = $xp;
+        $data['certificado_atual'] = $certificado_atual;
+        $data['proximo'] = $proximo;
 
         $this->load->view('painel/header', $data);
         $this->load->view('laboratorio/index', $data);

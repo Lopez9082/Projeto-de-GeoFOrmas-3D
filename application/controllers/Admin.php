@@ -2,81 +2,81 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
-    public function __construct(){
+
+    public function __construct()
+    {
         parent::__construct();
-        $this->load->model('Questao_model');
-        $this->load->model('Usuario_model');
+        $this->load->model('Professor_model');
         $this->load->library('session');
-        $this->load->helper(['url','form']);
-        // Verifica se usuário logado e papel
-        if(!$this->session->userdata('logado')) redirect('login');
-        $papel = $this->session->userdata('papel');
-        if(!in_array($papel, ['professor','licenciado','admin'])){
-            show_error('Acesso negado: você não tem permissão para acessar esta área',403);
+        $this->load->helper('url');
+        $this->load->library('email');
+    }
+
+    public function dashboard()
+    {
+        // 🔒 proteção
+        if (!$this->session->userdata('admin')) {
+            redirect('professor/login');
         }
+
+        $data['pendentes'] = $this->Professor_model->listar_pendentes();
+
+        $this->load->view('admin/dashboard', $data);
     }
 
-    public function lista_questoes(){
-        $data['questoes'] = $this->Questao_model->listar_todas();
-        $this->load->view('admin/header',$data);
-        $this->load->view('admin/questoes_lista',$data);
-        $this->load->view('admin/footer');
+    public function aprovar($id)
+{
+    if (!$this->session->userdata('admin')) {
+        redirect('professor/login');
     }
 
-    public function novo(){
-        if($this->input->post()){
-            $dados = [
-                'tema_id' => $this->input->post('tema_id'),
-                'nivel' => $this->input->post('nivel'),
-                'enunciado' => $this->input->post('enunciado'),
-                'alternativa_a' => $this->input->post('alternativa_a'),
-                'alternativa_b' => $this->input->post('alternativa_b'),
-                'alternativa_c' => $this->input->post('alternativa_c'),
-                'alternativa_d' => $this->input->post('alternativa_d'),
-                'alternativa_e' => $this->input->post('alternativa_e'),
-                'correta' => strtoupper($this->input->post('correta')),
-                'feedback_pedagogico' => $this->input->post('feedback_pedagogico'),
-                'criado_por' => $this->session->userdata('usuario_id')
-            ];
-            $this->Questao_model->inserir($dados);
-            $this->session->set_flashdata('sucesso','Questão cadastrada com sucesso.');
-            redirect('admin/lista_questoes');
-        }
-        $this->load->view('admin/header');
-        $this->load->view('admin/questao_form', ['acao'=>'novo','temas'=>$this->db->get('temas')->result()]);
-        $this->load->view('admin/footer');
+    // busca professor
+    $professor = $this->db->where('id', $id)->get('professores')->row();
+
+    if (!$professor) {
+        show_404();
     }
 
-    public function editar($id){
-        $questao = $this->Questao_model->buscar($id);
-        if(!$questao) show_404();
-        if($this->input->post()){
-            $dados = [
-                'tema_id' => $this->input->post('tema_id'),
-                'nivel' => $this->input->post('nivel'),
-                'enunciado' => $this->input->post('enunciado'),
-                'alternativa_a' => $this->input->post('alternativa_a'),
-                'alternativa_b' => $this->input->post('alternativa_b'),
-                'alternativa_c' => $this->input->post('alternativa_c'),
-                'alternativa_d' => $this->input->post('alternativa_d'),
-                'alternativa_e' => $this->input->post('alternativa_e'),
-                'correta' => strtoupper($this->input->post('correta')),
-                'feedback_pedagogico' => $this->input->post('feedback_pedagogico')
-            ];
-            $this->Questao_model->atualizar($id,$dados);
-            $this->session->set_flashdata('sucesso','Questão atualizada.');
-            redirect('admin/lista_questoes');
-        }
-        $this->load->view('admin/header');
-        $this->load->view('admin/questao_form', ['acao'=>'editar','questao'=>$questao,'temas'=>$this->db->get('temas')->result()]);
-        $this->load->view('admin/footer');
+    // aprova no banco
+    $this->Professor_model->aprovar($id);
+
+    // 🔥 CONFIG EMAIL
+    $this->load->library('email');
+
+    $config = [
+        'protocol'  => 'smtp',
+        'smtp_host' => 'smtp.gmail.com',
+        'smtp_port' => 587,
+        'smtp_user' => 'mathgame.unig@gmail.com',
+        'smtp_pass' => 'pzaf mchv xsrv ntnj',
+        'mailtype'  => 'html',
+        'charset'   => 'utf-8',
+        'newline'   => "\r\n"
+    ];
+
+    $this->email->initialize($config);
+
+    // 🔥 ENVIA EMAIL
+    $this->email->from('mathgame.unig@gmail.com', 'MathGame');
+    $this->email->to($professor->email);
+
+    $this->email->subject('Cadastro aprovado 🎉');
+
+    $this->email->message("
+        <h2>Olá, {$professor->nome}!</h2>
+        <p>Seu cadastro foi <strong>aprovado</strong> com sucesso.</p>
+        <p>Agora você já pode acessar o sistema e utilizar todas as funcionalidades.</p>
+        <br>
+        <a href='http://localhost/MathGame/professor/login'>
+            Acessar sistema
+        </a>
+    ");
+
+    if (!$this->email->send()) {
+        log_message('error', $this->email->print_debugger());
     }
 
-    public function excluir($id){
-        $questao = $this->Questao_model->buscar($id);
-        if(!$questao) show_404();
-        $this->Questao_model->excluir($id);
-        $this->session->set_flashdata('sucesso','Questão excluída.');
-        redirect('admin/lista_questoes');
-    }
+    $this->session->set_flashdata('sucesso', 'Professor aprovado e e-mail enviado!');
+    redirect('admin/dashboard');
+}
 }

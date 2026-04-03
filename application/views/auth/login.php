@@ -302,6 +302,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
     else
       redirect('painel');
   }
+
+   if($this->session->flashdata('sucesso')): ?>
+  <div style="color: #00ff88; margin-bottom:10px;">
+    <?= $this->session->flashdata('sucesso') ?>
+  </div>
+<?php endif; ?>
+
+<?php if($this->session->flashdata('erro')): ?>
+  <div style="color: red; margin-bottom:10px;">
+    <?= $this->session->flashdata('erro') ?>
+  </div>
+<?php endif; 
+
 ?>
 
 <div class="split">
@@ -406,7 +419,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
         <!-- Só exibe "criar conta" para alunos -->
         <div id="registerSection">
           <div class="divider"><span>OU</span></div>
-          <a href="<?= site_url('registrar') ?>" class="register-link">
+          <a href="<?= site_url('auth/registrar') ?>" class="register-link">
+            Não tem conta? <span>Criar conta grátis →</span>
+          </a>
+        </div>
+
+        <div id="registerSection2">
+          <div class="divider"><span>OU</span></div>
+          <a href="<?= site_url('professor/registrar') ?>" class="register-link">
             Não tem conta? <span>Criar conta grátis →</span>
           </a>
         </div>
@@ -446,6 +466,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
     form.style.animation = 'slideIn .4s ease';
 
     const isProf = roleSelected === 'professor';
+    const isAluno = roleSelected === 'aluno'
 
     // campo hidden
     document.getElementById('inputPapel').value = roleSelected;
@@ -485,6 +506,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 
     // seção de cadastro só para aluno
     document.getElementById('registerSection').style.display = isProf ? 'none' : 'block';
+    document.getElementById('registerSection2').style.display = isAluno ? 'none' : 'block';
+
   }
 
   function goBack() {

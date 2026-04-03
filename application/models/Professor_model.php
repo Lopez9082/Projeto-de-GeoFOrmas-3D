@@ -22,6 +22,11 @@ class Professor_model extends CI_Model {
                     ->row();
     }
 
+    public function criar($dados){
+        $this->db->insert('professores', $dados);
+        return $this->db->insert_id();
+    }
+
     /**
      * BUSCA UM PROFESSOR PELO ID
      */
@@ -78,5 +83,22 @@ class Professor_model extends CI_Model {
     public function listar_todos()
     {
         return $this->db->order_by('nome', 'ASC')->get($this->tabela)->result();
+    }
+
+    //Lista professores pendentes de aprovação
+
+    public function listar_pendentes()
+    {
+        return $this->db
+            ->where('status', 'pendente')
+            ->get('professores')
+            ->result();
+    }
+
+    public function aprovar($id)
+    {
+        return $this->db
+            ->where('id', $id)
+            ->update('professores', ['status' => 'aprovado']);
     }
 }
