@@ -84,9 +84,14 @@
         <div class="form-title2 aluno" id="formTitle">ENTRAR</div>
         <div class="form-subtitle2" id="formSub">// acesse sua conta para jogar</div>
 
-        <?php if ($this->session->flashdata('erro')): ?>
-          <div class="msg-erro">⚠ <?= html_escape($this->session->flashdata('erro')) ?></div>
-        <?php endif; ?>
+        <?php
+          $erro = $this->session->flashdata('erro');
+          $papel_flash = $this->session->flashdata('papel');
+          ?>
+
+          <?php if ($erro && $papel_flash === 'aluno'): ?>
+            <div class="msg-erro">⚠ <?= html_escape($erro) ?></div>
+          <?php endif; ?>
         <?php if ($this->session->flashdata('success')): ?>
           <div class="msg-success">✔ <?= html_escape($this->session->flashdata('success')) ?></div>
         <?php endif; ?>
@@ -231,8 +236,13 @@
     $papel_flash = $this->session->flashdata('papel');
     if ($this->session->flashdata('erro') && $papel_flash):
     ?>
-      selectRole('<?= $papel_flash ?>');
-      goToForm();
+        const papelFlash = "<?= $papel_flash ?>";
+        const erro = "<?= $erro ?>";
+
+        if (erro && papelFlash === 'aluno') {
+          selectRole('aluno');
+          goToForm();
+        }
     <?php endif; ?>
   </script>
 

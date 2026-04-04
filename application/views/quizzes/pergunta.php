@@ -1,10 +1,14 @@
+<head>
+  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame-theme/quizzes/pergunta.css') ?>"> 
+</head>
+
 <div class="question-container">
 
   <!-- BARRA DE PROGRESSO -->
   <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
-    <span style="font-family:var(--font-display);font-size:.72rem;color:var(--text-dim);white-space:nowrap">QUESTÃO <?= $numero ?>/5</span>
+    <span style="font-family:var(--font-display);font-size:.72rem;color:var(--text-dim);white-space:nowrap">QUESTÃO <?= $numero ?>/10</span>
     <div style="flex:1;height:6px;background:rgba(0,245,255,.1);border-radius:3px;overflow:hidden">
-      <div style="height:100%;width:<?= ($numero / 5) * 100 ?>%;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));border-radius:3px;box-shadow:var(--glow-cyan);transition:width .5s ease"></div>
+      <div style="height:100%;width:<?= ($numero / 10) * 100 ?>%;background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));border-radius:3px;box-shadow:var(--glow-cyan);transition:width .5s ease"></div>
     </div>
     <span style="font-family:var(--font-mono);font-size:.72rem;color:var(--neon-green);text-shadow:var(--glow-green)">⬡ +25 pts</span>
   </div>

@@ -1,0 +1,187 @@
+:root{
+  --bg:#03020a;
+  --card:#120f2e;
+  --cyan:#00f5ff;
+  --pink:#ff00c8;
+  --text:#e8f4ff;
+}
+
+/* RESET */
+*{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background: var(--bg);
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--text);
+  padding: clamp(16px, 4vw, 40px);
+}
+
+/* TITULOS */
+h1{
+  font-family: 'Orbitron';
+  color: var(--cyan);
+  text-shadow: 0 0 10px var(--cyan);
+  margin-bottom:20px;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+}
+
+h2{
+  margin-top:40px;
+  color: var(--cyan);
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+}
+
+/* ALERTA */
+.alert{
+  background: rgba(0,255,150,.1);
+  border:1px solid rgba(0,255,150,.5);
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:20px;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+}
+
+/* CARD */
+.card{
+  background: var(--card);
+  border-radius:12px;
+  padding: clamp(16px, 3vw, 20px);
+  box-shadow: 0 0 20px rgba(0,245,255,.1);
+  border:1px solid rgba(0,245,255,.2);
+  overflow-x: auto;
+}
+
+/* TABELA */
+table{
+  width:100%;
+  border-collapse: collapse;
+  margin-top:20px;
+  min-width: 600px; /* evita quebrar layout */
+}
+
+th, td{
+  padding:12px;
+  text-align:left;
+  font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+}
+
+th{
+  color: var(--cyan);
+  border-bottom:1px solid rgba(0,245,255,.3);
+}
+
+td{
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+/* BOTÃO */
+.btn{
+  padding:8px 14px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:bold;
+  font-size: clamp(0.7rem, 2vw, 0.85rem);
+  display:inline-block;
+  white-space: nowrap;
+}
+
+.btn-approve{
+  background: linear-gradient(135deg, var(--cyan), var(--pink));
+  color:#000;
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+.btn-approve:hover{
+  transform:scale(1.05);
+}
+
+/* VAZIO */
+.empty{
+  opacity:.7;
+}
+
+/* LOGOUT */
+.logout{
+  display:inline-block;
+  margin-top:30px;
+  color: var(--pink);
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+}
+
+/* ══ RESPONSIVO ═══════════════════════════ */
+
+/* tablets */
+@media (max-width: 768px){
+
+  body{
+    padding:20px 14px;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+  table{
+    min-width: 500px;
+  }
+
+}
+
+/* mobile */
+@media (max-width: 500px){
+
+  h1{
+    text-align:center;
+  }
+
+  h2{
+    text-align:center;
+  }
+
+  .alert{
+    text-align:center;
+  }
+
+  .card{
+    padding:14px;
+  }
+
+  /* tabela vira scroll horizontal */
+  .card{
+    overflow-x: auto;
+  }
+
+  table{
+    min-width: 480px;
+  }
+
+  /* botões menores */
+  .btn{
+    padding:6px 10px;
+    font-size: 0.7rem;
+  }
+
+  .logout{
+    display:block;
+    text-align:center;
+  }
+
+}
+
+/* mobile pequeno */
+@media (max-width: 360px){
+
+  table{
+    min-width: 420px;
+  }
+
+  .btn{
+    font-size: 0.65rem;
+    padding:6px 8px;
+  }
+
+}

@@ -80,7 +80,7 @@ class Questao_model extends CI_Model {
             ->where("nivel", $nivel)
             ->where("excluida", 0)
             ->order_by("RAND()")
-            ->limit(5)
+            ->limit(10)
             ->get("questoes")
             ->result();
     }

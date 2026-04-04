@@ -62,8 +62,8 @@ class Quizzes extends CI_Controller {
 
         $questoes = $this->Questao_model->buscarQuestoes($tema, $nivel);
 
-        if (!$questoes || count($questoes) < 5) {
-            echo "Não há 5 questões cadastradas para este tema/nivel.";
+        if (!$questoes || count($questoes) < 10) {
+            echo "Não há 10 questões cadastradas para este tema/nivel.";
             return;
         }
 
@@ -82,7 +82,7 @@ class Quizzes extends CI_Controller {
     $questoes = $this->session->userdata("quiz_questoes");
 
     // ✅ PRIMEIRO: verifica se terminou o quiz
-    if ($index >= 5) {
+    if ($index >= 10) {
         redirect("quizzes/final");
         return;
     }

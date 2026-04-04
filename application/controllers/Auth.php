@@ -22,31 +22,26 @@ class Auth extends CI_Controller {
 {
     $email = $this->input->post('email');
     $senha = $this->input->post('senha');
+    $papel = $this->input->post('papel'); // importante para voltar no step certo
 
     $usuario = $this->Usuario_model->buscar_por_email($email);
 
-    if ($usuario) {
-        // DEBUG: Veja os valores vindo do banco
-        /*
-        echo "<pre>";
-        print_r($usuario);
-        echo "Digitada: ".$senha;
-        exit;
-        */
+    if ($usuario && $usuario->senha == $senha) {
 
-        if ($usuario->senha == $senha) {
+        $this->session->set_userdata([
+            'logado'      => true,
+            'usuario_id'  => $usuario->id,
+            'nome'        => $usuario->nome,
+            'papel'       => $usuario->papel
+        ]);
 
-            $this->session->set_userdata([
-                'logado'      => true,
-                'usuario_id'  => $usuario->id,
-                'nome'        => $usuario->nome,
-                'papel'       => $usuario->papel
-            ]);
-
-            redirect('painel');
-            return;
-        }
+        redirect('painel');
+        return;
     }
+
+    // ❌ LOGIN INCORRETO
+    $this->session->set_flashdata('erro', 'E-mail ou senha incorretos');
+    $this->session->set_flashdata('papel', $papel); // mantém aluno/professor
 
     redirect('login');
 }
