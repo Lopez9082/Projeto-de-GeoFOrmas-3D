@@ -1,3 +1,8 @@
+<?php
+$sucesso = $this->session->flashdata('sucesso');
+$papel_flash = $this->session->flashdata('papel');
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -92,9 +97,12 @@
           <?php if ($erro && $papel_flash === 'aluno'): ?>
             <div class="msg-erro">⚠ <?= html_escape($erro) ?></div>
           <?php endif; ?>
-        <?php if ($this->session->flashdata('success')): ?>
-          <div class="msg-success">✔ <?= html_escape($this->session->flashdata('success')) ?></div>
-        <?php endif; ?>
+        
+          <?php if ($sucesso): ?>
+            <div class="msg-success">
+              ✔ <?= html_escape($sucesso) ?>
+            </div>
+          <?php endif; ?>
 
         <form method="post" id="loginForm" action="<?= site_url('auth/autenticar') ?>">
           <!-- campo hidden para indicar o papel ao controller -->
@@ -127,7 +135,14 @@
         <!-- Só exibe "criar conta" para alunos -->
         <div id="registerSection">
           <div class="divider"><span>OU</span></div>
-          <a href="<?= site_url('registrar') ?>" class="register-link">
+          <a href="<?= site_url('auth/registrar') ?>" class="register-link">
+            Não tem conta? <span>Criar conta grátis →</span>
+          </a>
+        </div>
+
+        <div id="registerSection2">
+          <div class="divider"><span>OU</span></div>
+          <a href="<?= site_url('professor/registrar') ?>" class="register-link">
             Não tem conta? <span>Criar conta grátis →</span>
           </a>
         </div>
@@ -167,6 +182,7 @@
       form.style.animation = 'slideIn .4s ease';
 
       const isProf = roleSelected === 'professor';
+      const isAluno = roleSelected === 'aluno';
 
       // campo hidden
       document.getElementById('inputPapel').value = roleSelected;
@@ -206,6 +222,8 @@
 
       // seção de cadastro só para aluno
       document.getElementById('registerSection').style.display = isProf ? 'none' : 'block';
+      //seção de cadastro só para professor
+      document.getElementById('registerSection2').style.display = isAluno ? 'none' : 'block';
     }
 
     function goBack() {
@@ -231,6 +249,7 @@
       btn.textContent = 'VERIFICANDO...';
     });
 
+
     // Se vier flashdata de erro, vai direto pro form com o perfil certo
     <?php
     $papel_flash = $this->session->flashdata('papel');
@@ -244,7 +263,21 @@
           goToForm();
         }
     <?php endif; ?>
+
+    <?php if ($sucesso && $papel_flash === 'professor'): ?>
+<script>
+  selectRole('professor');
+  goToForm();
+</script>
+<?php endif; ?>
   </script>
+
+  <?php if ($sucesso && $papel_flash === 'professor'): ?>
+<script>
+  selectRole('professor');
+  goToForm();
+</script>
+<?php endif; ?>
 
   <footer class="footer">
   <div class="footer-content">
