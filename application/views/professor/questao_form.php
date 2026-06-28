@@ -14,7 +14,7 @@
   <?php endif; ?>
 
   <div class="card">
-    <form action="<?= base_url(isset($questao) ? 'professor/editar_questao/'.$questao->id : 'professor/nova_questao') ?>"
+    <form action="<?= site_url(isset($questao) ? 'professor/editar_questao/'.$questao->id : 'professor/nova_questao') ?>"
           method="post" enctype="multipart/form-data">
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -53,23 +53,28 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div>
           <label>Alternativa A</label>
-          <input type="text" name="alternativa_a" value="<?= isset($questao) ? html_escape($questao->alternativa_a) : '' ?>" required>
+          <input type="text" name="alternativa_a" value="<?= isset($questao) ? html_escape($questao->alternativa_a) : '' ?>">
+          <input type="file" name="img_a">
         </div>
         <div>
           <label>Alternativa B</label>
-          <input type="text" name="alternativa_b" value="<?= isset($questao) ? html_escape($questao->alternativa_b) : '' ?>" required>
+          <input type="text" name="alternativa_b" value="<?= isset($questao) ? html_escape($questao->alternativa_b) : '' ?>">
+          <input type="file" name="img_b">
         </div>
         <div>
           <label>Alternativa C</label>
-          <input type="text" name="alternativa_c" value="<?= isset($questao) ? html_escape($questao->alternativa_c) : '' ?>" required>
+          <input type="text" name="alternativa_c" value="<?= isset($questao) ? html_escape($questao->alternativa_c) : '' ?>" >
+          <input type="file" name="img_c">
         </div>
         <div>
           <label>Alternativa D</label>
-          <input type="text" name="alternativa_d" value="<?= isset($questao) ? html_escape($questao->alternativa_d) : '' ?>" required>
+          <input type="text" name="alternativa_d" value="<?= isset($questao) ? html_escape($questao->alternativa_d) : '' ?>" >
+          <input type="file" name="img_d">
         </div>
         <div>
           <label>Alternativa E</label>
           <input type="text" name="alternativa_e" value="<?= isset($questao) ? html_escape($questao->alternativa_e) : '' ?>">
+          <input type="file" name="img_e">
         </div>
         <div>
           <label>Resposta Correta (A–E)</label>
@@ -77,14 +82,16 @@
             value="<?= isset($questao) ? html_escape($questao->correta) : '' ?>" required
             placeholder="A, B, C, D ou E">
         </div>
+
       </div>
 
       <label>Feedback Pedagógico</label>
       <textarea name="feedback_pedagogico" rows="4" style="resize:vertical"><?= isset($questao) ? html_escape($questao->feedback_pedagogico) : '' ?></textarea>
-
+      <input type="file" name="img_feedback">
+    
       <div style="display:flex;gap:12px;margin-top:8px">
         <button type="submit" class="btn btn-primary"><?= isset($questao) ? '✔ ATUALIZAR' : '+ SALVAR QUESTÃO' ?></button>
-        <a href="<?= base_url('professor/questoes') ?>" class="btn btn-secondary">← CANCELAR</a>
+        <a href="<?= site_url('professor/questoes') ?>" class="btn btn-secondary">← CANCELAR</a>
       </div>
 
     </form>

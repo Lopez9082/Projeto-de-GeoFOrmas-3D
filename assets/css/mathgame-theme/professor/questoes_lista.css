@@ -1,0 +1,196 @@
+/* =========================
+   GERENCIAR QUESTÕES
+========================= */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:22px;
+}
+
+.page-header h2{
+    margin:0;
+    color:#00f5ff;
+    text-shadow:0 0 12px rgba(0,245,255,.4);
+    letter-spacing:.08em;
+}
+
+.page-header p{
+    margin-top:4px;
+    font-size:.75rem;
+    font-family:var(--font-mono);
+    color:#8aa0c8;
+}
+
+/* botão novo */
+.btn-new{
+    padding:10px 14px;
+    border-radius:10px;
+    background:linear-gradient(90deg,#00f5ff,#00b8ff);
+    color:#06111b;
+    font-weight:700;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn-new:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 18px rgba(0,245,255,.35);
+}
+
+/* card tabela */
+.table-card{
+    background:rgba(16,23,44,.92);
+    border:1px solid rgba(0,245,255,.15);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 0 25px rgba(0,245,255,.08);
+}
+
+/* scroll */
+.table-wrapper{
+    overflow-x:auto;
+}
+
+/* tabela */
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.85rem;
+}
+
+thead{
+    background:rgba(0,245,255,.05);
+}
+
+th{
+    text-align:left;
+    padding:14px;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    color:#9fb8c7;
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+td{
+    padding:14px;
+    border-bottom:1px solid rgba(255,255,255,.04);
+    color:#d7e3ff;
+}
+
+/* hover linha */
+tbody tr:hover{
+    background:rgba(0,245,255,.03);
+}
+
+/* linha desativada */
+.row-disabled{
+    opacity:.55;
+}
+
+/* enunciado */
+.enunciado{
+    max-width:260px;
+}
+
+/* mono */
+.mono{
+    font-family:var(--font-mono);
+    color:#8aa0c8;
+}
+
+/* thumbnail */
+.thumb{
+    width:60px;
+    border-radius:8px;
+    border:1px solid rgba(0,245,255,.2);
+}
+
+/* motivo */
+.motivo{
+    max-width:140px;
+    font-size:.75rem;
+    color:#9fb8c7;
+}
+
+/* badges */
+.badge{
+    padding:4px 8px;
+    border-radius:8px;
+    font-size:.65rem;
+    font-weight:700;
+    letter-spacing:.06em;
+}
+
+.badge.purple{
+    background:rgba(140,90,255,.15);
+    color:#c7b6ff;
+}
+
+.badge.cyan{
+    background:rgba(0,245,255,.12);
+    color:#00f5ff;
+}
+
+.badge.green{
+    background:rgba(56,255,153,.12);
+    color:#38ff99;
+}
+
+.badge.pink{
+    background:rgba(255,61,168,.12);
+    color:#ff6bbf;
+}
+
+/* ações */
+.actions{
+    display:flex;
+    gap:6px;
+}
+
+.btn{
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:.65rem;
+    font-weight:700;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn.edit{
+    background:#1c2a44;
+    color:#cfe3ff;
+}
+
+.btn.edit:hover{
+    background:#243554;
+}
+
+.btn.danger{
+    background:linear-gradient(135deg,#ff2d7a,#7a2cff);
+    color:#fff;
+}
+
+.btn.danger:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 15px rgba(255,45,122,.3);
+}
+
+/* bloqueado */
+.locked{
+    font-size:.7rem;
+    color:#ff6bbf;
+}
+
+/* mensagens */
+.msg-success{
+    margin-bottom:16px;
+    padding:12px;
+    border-radius:10px;
+    background:#0d3c2a;
+    border:1px solid #2fff93;
+    color:#d8ffea;
+}

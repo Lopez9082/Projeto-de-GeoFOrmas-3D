@@ -97,6 +97,10 @@ $papel_flash = $this->session->flashdata('papel');
           <?php if ($erro && $papel_flash === 'aluno'): ?>
             <div class="msg-erro">⚠ <?= html_escape($erro) ?></div>
           <?php endif; ?>
+
+          <?php if ($erro && $papel_flash === 'professor'): ?>
+            <div class="msg-erro prof">⚠ <?= html_escape($erro) ?></div>
+          <?php endif; ?>
         
           <?php if ($sucesso): ?>
             <div class="msg-success">
@@ -262,9 +266,15 @@ $papel_flash = $this->session->flashdata('papel');
           selectRole('aluno');
           goToForm();
         }
+
+        if (erro && papelFlash === 'professor') {
+          selectRole('professor');
+          goToForm();
+        }
     <?php endif; ?>
 
     <?php if ($sucesso && $papel_flash === 'professor'): ?>
+
 <script>
   selectRole('professor');
   goToForm();
@@ -273,7 +283,7 @@ $papel_flash = $this->session->flashdata('papel');
   </script>
 
   <?php if ($sucesso && $papel_flash === 'professor'): ?>
-<script>
+  <script>
   selectRole('professor');
   goToForm();
 </script>

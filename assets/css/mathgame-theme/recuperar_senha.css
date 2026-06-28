@@ -1,0 +1,315 @@
+/* ===================================================
+   MATHGAME - RECUPERAÇÃO DE SENHA
+   CSS Independente
+=================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+:root{
+
+    --bg:#050816;
+    --card:#10172c;
+    --card2:#0d1427;
+
+    --cyan:#00F5FF;
+    --cyan2:#00D9FF;
+    --pink:#FF3DA8;
+    --green:#38ff99;
+
+    --text:#FFFFFF;
+    --text2:#B8C6E6;
+
+    --border:rgba(0,245,255,.28);
+
+    --shadow-cyan:0 0 18px rgba(0,245,255,.35);
+    --shadow-pink:0 0 18px rgba(255,61,168,.35);
+
+    --font-title:'Orbitron',sans-serif;
+    --font-body:'Rajdhani',sans-serif;
+    --font-mono:'Share Tech Mono',monospace;
+}
+
+/* ========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:25px;
+
+    font-family:var(--font-body);
+
+    background:
+        radial-gradient(circle at top,#00f5ff22 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#ff3da822 0%,transparent 35%),
+        linear-gradient(180deg,#09101d,#050816);
+
+    color:var(--text);
+
+}
+
+/* ========================= */
+
+.login-card{
+
+    width:100%;
+    max-width:470px;
+
+    padding:42px;
+
+    border-radius:20px;
+
+    background:rgba(16,23,44,.95);
+
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 0 35px rgba(0,245,255,.12),
+        inset 0 0 12px rgba(255,255,255,.03);
+
+    animation:entrada .5s ease;
+
+}
+
+/* ========================= */
+
+.rec-title{
+
+    text-align:center;
+
+    font-family:var(--font-title);
+
+    font-size:2rem;
+
+    font-weight:900;
+
+    color:var(--cyan);
+
+    text-shadow:0 0 15px rgba(0,245,255,.8);
+
+    letter-spacing:.12em;
+
+}
+
+.rec-subtitle{
+
+    text-align:center;
+
+    margin-top:8px;
+    margin-bottom:35px;
+
+    color:var(--text2);
+
+    font-family:var(--font-mono);
+
+    font-size:.75rem;
+
+    letter-spacing:.18em;
+
+}
+
+/* ========================= */
+
+label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#ffffff;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+}
+
+/* ========================= */
+
+input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    border:1px solid #2d3e63;
+
+    background:#0b1222;
+
+    color:#ffffff;
+
+    font-size:16px;
+
+    outline:none;
+
+    transition:.3s;
+
+    margin-bottom:22px;
+
+}
+
+input::placeholder{
+
+    color:#7b8fb8;
+
+}
+
+input:focus{
+
+    border-color:var(--cyan);
+
+    box-shadow:var(--shadow-cyan);
+
+}
+
+/* ========================= */
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    font-family:var(--font-body);
+
+    transition:.3s;
+
+    background:linear-gradient(90deg,var(--cyan),var(--cyan2));
+
+    color:#06111b;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 0 20px rgba(0,245,255,.45);
+
+}
+
+/* ========================= */
+
+.link-small{
+
+    display:block;
+
+    margin-top:24px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    color:var(--cyan);
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.link-small:hover{
+
+    color:var(--pink);
+
+    text-shadow:var(--shadow-pink);
+
+}
+
+/* ========================= */
+
+.msg-erro{
+
+    margin-bottom:20px;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    background:#4c1118;
+
+    border:1px solid #ff5b73;
+
+    color:#ffd6dc;
+
+}
+
+.msg-success{
+
+    margin-bottom:20px;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    background:#0d3c2a;
+
+    border:1px solid #2fff93;
+
+    color:#d8ffea;
+
+}
+
+/* ========================= */
+
+@keyframes entrada{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ========================= */
+
+@media(max-width:600px){
+
+    .login-card{
+
+        padding:30px 24px;
+
+    }
+
+    .rec-title{
+
+        font-size:1.6rem;
+
+    }
+
+}

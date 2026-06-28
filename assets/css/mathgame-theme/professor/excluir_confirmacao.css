@@ -1,0 +1,160 @@
+/* =========================
+   OCULTAR QUESTÃO - DESIGN
+========================= */
+
+.container-ocultar{
+    max-width:750px;
+    margin:0 auto;
+    padding:20px;
+    font-family:var(--font-body);
+}
+
+/* HEADER */
+.header h2{
+    margin:0;
+    font-size:1.8rem;
+    color:#ff3da8;
+    text-shadow:0 0 12px rgba(255,61,168,.5);
+    letter-spacing:.08em;
+}
+
+.header p{
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    color:#8aa0c8;
+    margin-top:6px;
+}
+
+/* CARD */
+.card-ocultar{
+    margin-top:20px;
+    background:rgba(16,23,44,.92);
+    border:1px solid rgba(255,61,168,.25);
+    border-radius:16px;
+    padding:26px;
+    box-shadow:0 0 25px rgba(255,61,168,.10);
+    position:relative;
+}
+
+/* ALERTA */
+.badge-alert{
+    display:inline-block;
+    padding:6px 10px;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    background:rgba(255,61,168,.12);
+    border:1px solid rgba(255,61,168,.35);
+    color:#ff7abf;
+    border-radius:8px;
+    margin-bottom:14px;
+}
+
+/* ENUNCIADO */
+.card-ocultar h3{
+    margin-bottom:10px;
+    color:#fff;
+    font-size:1rem;
+}
+
+.box-enunciado{
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:12px;
+    padding:14px;
+    color:#d7e3ff;
+    line-height:1.6;
+    margin-bottom:16px;
+}
+
+/* IMAGEM */
+.img-box{
+    text-align:center;
+    margin-bottom:16px;
+}
+
+.img-box img{
+    max-width:320px;
+    border-radius:12px;
+    border:1px solid rgba(0,245,255,.2);
+    box-shadow:0 0 15px rgba(0,245,255,.1);
+}
+
+/* FORM */
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#fff;
+    font-weight:600;
+}
+
+textarea{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #2a3b5e;
+    background:#0b1222;
+    color:#fff;
+    resize:vertical;
+    outline:none;
+    transition:.3s;
+    font-family:var(--font-body);
+}
+
+textarea:focus{
+    border-color:#ff3da8;
+    box-shadow:0 0 15px rgba(255,61,168,.25);
+}
+
+/* ACTIONS */
+.actions{
+    display:flex;
+    gap:12px;
+    margin-top:14px;
+}
+
+/* BOTÃO DESTRUIR */
+.btn-danger{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:700;
+    color:#fff;
+    background:linear-gradient(135deg,#ff2d7a,#7a2cff);
+    transition:.3s;
+}
+
+.btn-danger:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 20px rgba(255,45,122,.35);
+}
+
+/* CANCELAR */
+.btn-cancelar{
+    flex:1;
+    text-align:center;
+    padding:14px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+    background:#1b2438;
+    color:#a9b7d0;
+    transition:.3s;
+}
+
+.btn-cancelar:hover{
+    background:#24314d;
+    color:#fff;
+}
+
+/* ERRO */
+.msg-erro{
+    margin-top:14px;
+    padding:12px;
+    border-radius:10px;
+    background:#3a0f17;
+    border:1px solid #ff4d6d;
+    color:#ffd6df;
+}

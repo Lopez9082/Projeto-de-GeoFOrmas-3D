@@ -22,26 +22,49 @@ class Auth extends CI_Controller {
 {
     $email = $this->input->post('email');
     $senha = $this->input->post('senha');
-    $papel = $this->input->post('papel'); // importante para voltar no step certo
+    $papel = $this->input->post('papel');
 
     $usuario = $this->Usuario_model->buscar_por_email($email);
 
-    if ($usuario && $usuario->senha == $senha) {
+    if ($usuario) {
 
-        $this->session->set_userdata([
-            'logado'      => true,
-            'usuario_id'  => $usuario->id,
-            'nome'        => $usuario->nome,
-            'papel'       => $usuario->papel
-        ]);
+        // Senha já criptografada
+        if (password_verify($senha, $usuario->senha)) {
 
-        redirect('painel');
-        return;
+            $this->session->set_userdata([
+                'logado'     => true,
+                'usuario_id' => $usuario->id,
+                'nome'       => $usuario->nome,
+                'papel'      => $usuario->papel
+            ]);
+
+            redirect('painel');
+            return;
+        }
+
+        // Compatibilidade com senhas antigas em texto puro
+        if ($usuario->senha === $senha) {
+
+            // Atualiza automaticamente para hash
+            $hash = password_hash($senha, PASSWORD_DEFAULT);
+
+            $this->db->where('id', $usuario->id)
+                     ->update('usuarios', ['senha' => $hash]);
+
+            $this->session->set_userdata([
+                'logado'     => true,
+                'usuario_id' => $usuario->id,
+                'nome'       => $usuario->nome,
+                'papel'      => $usuario->papel
+            ]);
+
+            redirect('painel');
+            return;
+        }
     }
 
-    // ❌ LOGIN INCORRETO
     $this->session->set_flashdata('erro', 'E-mail ou senha incorretos');
-    $this->session->set_flashdata('papel', $papel); // mantém aluno/professor
+    $this->session->set_flashdata('papel', $papel);
 
     redirect('login');
 }
@@ -66,11 +89,14 @@ class Auth extends CI_Controller {
                 redirect('registrar');
             }
 
-            // salva senha sem hash
+            // Criptografa a senha
+        $hash = password_hash($senha, PASSWORD_DEFAULT);
+
+            // salva senha com hash
             $id = $this->Usuario_model->criar([
                 'nome'  => $nome,
                 'email' => $email,
-                'senha' => $senha,
+                'senha' => $hash,                
                 'papel' => 'aluno'
             ]);
 

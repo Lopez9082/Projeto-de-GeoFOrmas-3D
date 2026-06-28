@@ -55,6 +55,8 @@ class Professor extends CI_Controller {
 
         } else {
             $this->session->set_flashdata('erro', 'E-mail ou senha incorretos');
+            $this->session->set_flashdata('papel', 'professor'); // ou 'aluno'
+
             redirect('auth/login');
         }
     }
@@ -67,16 +69,18 @@ class Professor extends CI_Controller {
     // ===============================
     // REGISTRAR
     // ===============================
-    public function registrar(){
-
-    if ($this->session->userdata('logado')) redirect('professor/dashboard');
+public function registrar()
+{
+    if ($this->session->userdata('logado')) {
+        redirect('professor/dashboard');
+    }
 
     if ($this->input->post()) {
 
         $nome  = $this->input->post('nome', true);
         $email = $this->input->post('email', true);
         $senha = $this->input->post('senha');
-        $faculdade = $this->input->post('faculdade'); 
+        $faculdade = $this->input->post('faculdade');
 
         // verifica email
         if ($this->Professor_model->buscar_por_email($email)) {
@@ -85,25 +89,41 @@ class Professor extends CI_Controller {
             return;
         }
 
-        // 🔥 CADASTRA COMO PENDENTE
+        $hash = password_hash($senha, PASSWORD_DEFAULT);
+
+
+        // salva no banco
         $this->Professor_model->criar([
             'nome'       => $nome,
             'email'      => $email,
-            'senha'      => $senha,
+            'senha'      => $hash,
             'faculdade'  => $faculdade,
-            'status'     => 'pendente' // 👈 AQUI ESTÁ A MUDANÇA
+            'status'     => 'pendente'
         ]);
 
-        // ❌ REMOVE LOGIN AUTOMÁTICO
-        // (não loga mais o professor)
+        // tenta enviar email (SEM QUEBRAR se falhar)
+        try {
+            $this->load->library('email');
 
-        // ✅ MENSAGEM DE AGUARDO
-        $this->session->set_flashdata(
-            'sucesso',
-            'Cadastro realizado com sucesso! Aguarde a liberação do administrador.'
-        );
+            $this->email->from('mathgame.unig@gmail.com', 'MathGame');
+            $this->email->to($email);
+            $this->email->subject('Cadastro recebido');
+            $this->email->message('
+                Olá!
 
-        redirect('professor/login');
+                Seu cadastro foi recebido com sucesso.
+                Aguarde a aprovação do administrador.
+            ');
+
+            $this->email->send();
+        } catch (Exception $e) {
+            log_message('error', 'Erro ao enviar email: ' . $e->getMessage());
+        }
+
+        // mensagem de sucesso
+        $this->session->set_flashdata('sucesso', true);
+
+        redirect('professor/registrar'); // 👈 ESSENCIAL
         return;
     }
 
@@ -142,29 +162,46 @@ class Professor extends CI_Controller {
     // ============================
     // CADASTRAR QUESTÃO
     // ============================
-    public function nova_questao()
+public function nova_questao()
     {
         $prof = $this->session->userdata('professor');
         if (!$prof) redirect('professor/login');
 
         if ($this->input->post()) {
 
-            $imagem = $this->fazer_upload_imagem();
-
+            // uploads
+            $imagem        = $this->fazer_upload_imagem('imagem');
+            $img_a         = $this->fazer_upload_imagem('img_a');
+            $img_b         = $this->fazer_upload_imagem('img_b');
+            $img_c         = $this->fazer_upload_imagem('img_c');
+            $img_d         = $this->fazer_upload_imagem('img_d');
+            $img_e         = $this->fazer_upload_imagem('img_e');
+            $img_feedback  = $this->fazer_upload_imagem('img_feedback');
 
             $dados = [
                 'tema_id'             => $this->input->post('tema_id'),
                 'nivel'               => $this->input->post('nivel'),
                 'enunciado'           => $this->input->post('enunciado'),
-                'imagem'              => $imagem, // nome do arquivo OU null
-                'alternativa_a'       => $this->input->post('alternativa_a'),
-                'alternativa_b'       => $this->input->post('alternativa_b'),
-                'alternativa_c'       => $this->input->post('alternativa_c'),
-                'alternativa_d'       => $this->input->post('alternativa_d'),
-                'alternativa_e'       => $this->input->post('alternativa_e'),
-                'correta'             => strtoupper($this->input->post('correta')),
+                'imagem'              => $imagem,
+
+                'alternativa_a' => $this->input->post('alternativa_a'),
+                'alternativa_b' => $this->input->post('alternativa_b'),
+                'alternativa_c' => $this->input->post('alternativa_c'),
+                'alternativa_d' => $this->input->post('alternativa_d'),
+                'alternativa_e' => $this->input->post('alternativa_e'),
+
+                // 🔥 NOVOS CAMPOS
+                'img_a' => $img_a,
+                'img_b' => $img_b,
+                'img_c' => $img_c,
+                'img_d' => $img_d,
+                'img_e' => $img_e,
+                'img_feedback' => $img_feedback,
+
+                'correta' => strtoupper($this->input->post('correta')),
                 'feedback_pedagogico' => $this->input->post('feedback_pedagogico'),
-                'criado_por'          => $prof['id']
+
+                'criado_por' => $prof['id']
             ];
 
             $this->Questao_model->inserir($dados);
@@ -173,79 +210,74 @@ class Professor extends CI_Controller {
             redirect('professor/questoes');
         }
 
-        // Dentro de Professor.php -> nova_questao()
-        $data['temas'] = $this->db->get('temas')->result(); // ou via Tema_model
+        $data['temas'] = $this->db->get('temas')->result();
 
         $this->load->view('professor/header');
-        $this->load->view('professor/questao_form', $data); // <--- $temas aqui
+        $this->load->view('professor/questao_form', $data);
         $this->load->view('professor/footer');
-
     }
-
+    
     // ============================
     // EDITAR QUESTÃO
     // ============================
     public function editar_questao($id)
-{
-    // Protege a rota
-    if (!$this->session->userdata('professor')) {
-        redirect('professor/login');
-        return;
-    }
-
-    // Busca a questão pelo ID
-    $questao = $this->Questao_model->buscar($id);
-
-    if (!$questao) {
-        show_error("Questão não encontrada", 404);
-        return;
-    }
-
-    // Busca os temas para o select
-    // Atenção: coloque o nome da coluna correta que existe na sua tabela de temas
-    $data['temas'] = $this->db->order_by('titulo', 'ASC')->get('temas')->result();
-
-    $data['questao'] = $questao;
-
-    // Se o formulário foi submetido
-    if ($this->input->post()) {
-
-        $imagem = $this->fazer_upload_imagem();
-        if ($imagem) {
-            // apaga antiga
-            if ($questao->imagem && file_exists('./uploads/questoes/'.$questao->imagem)) {
-                unlink('./uploads/questoes/'.$questao->imagem);
-            }
-        } else {
-            $imagem = $questao->imagem; // mantém a antiga
+    {
+        if (!$this->session->userdata('professor')) {
+            redirect('professor/login');
+            return;
         }
 
+        $questao = $this->Questao_model->buscar($id);
+        if (!$questao) show_404();
 
-        $dados = [
-            'tema_id'             => $this->input->post('tema_id'),
-            'nivel'               => $this->input->post('nivel'),
-            'enunciado'           => $this->input->post('enunciado'),
-            'imagem'              => $imagem,
-            'alternativa_a'       => $this->input->post('alternativa_a'),
-            'alternativa_b'       => $this->input->post('alternativa_b'),
-            'alternativa_c'       => $this->input->post('alternativa_c'),
-            'alternativa_d'       => $this->input->post('alternativa_d'),
-            'alternativa_e'       => $this->input->post('alternativa_e'),
-            'correta'             => strtoupper($this->input->post('correta')),
-            'feedback_pedagogico' => $this->input->post('feedback_pedagogico'),
-        ];
+        $data['temas'] = $this->db->order_by('titulo', 'ASC')->get('temas')->result();
+        $data['questao'] = $questao;
 
-        $this->Questao_model->atualizar($id, $dados);
+        if ($this->input->post()) {
 
-        $this->session->set_flashdata('sucesso', 'Questão atualizada!');
-        redirect('professor/questoes');
+            // uploads novos
+            $imagem       = $this->fazer_upload_imagem('imagem') ?: $questao->imagem;
+            $img_a        = $this->fazer_upload_imagem('img_a') ?: $questao->img_a;
+            $img_b        = $this->fazer_upload_imagem('img_b') ?: $questao->img_b;
+            $img_c        = $this->fazer_upload_imagem('img_c') ?: $questao->img_c;
+            $img_d        = $this->fazer_upload_imagem('img_d') ?: $questao->img_d;
+            $img_e        = $this->fazer_upload_imagem('img_e') ?: $questao->img_e;
+            $img_feedback = $this->fazer_upload_imagem('img_feedback') ?: $questao->img_feedback;
+
+            $dados = [
+                'tema_id'   => $this->input->post('tema_id'),
+                'nivel'     => $this->input->post('nivel'),
+                'enunciado' => $this->input->post('enunciado'),
+                'imagem'    => $imagem,
+
+                'alternativa_a' => $this->input->post('alternativa_a'),
+                'alternativa_b' => $this->input->post('alternativa_b'),
+                'alternativa_c' => $this->input->post('alternativa_c'),
+                'alternativa_d' => $this->input->post('alternativa_d'),
+                'alternativa_e' => $this->input->post('alternativa_e'),
+
+                // 🔥 NOVOS CAMPOS
+                'img_a' => $img_a,
+                'img_b' => $img_b,
+                'img_c' => $img_c,
+                'img_d' => $img_d,
+                'img_e' => $img_e,
+                'img_feedback' => $img_feedback,
+
+                'correta' => strtoupper($this->input->post('correta')),
+                'feedback_pedagogico' => $this->input->post('feedback_pedagogico'),
+            ];
+
+            $this->Questao_model->atualizar($id, $dados);
+
+            $this->session->set_flashdata('sucesso', 'Questão atualizada!');
+            redirect('professor/questoes');
+        }
+
+        $this->load->view('professor/header');
+        $this->load->view('professor/questao_form', $data);
+        $this->load->view('professor/footer');
     }
-
-    // Carrega a view com os dados da questão
-    $this->load->view('professor/header');
-    $this->load->view('professor/questao_form', $data);
-    $this->load->view('professor/footer');
-}
 
 
     // ============================
@@ -285,37 +317,31 @@ class Professor extends CI_Controller {
     
 
     // ----------- FUNÇÃO DE UPLOAD -----------
-    private function fazer_upload_imagem()
-{
-    if (empty($_FILES['imagem']['name'])) {
-        return null;
+        private function fazer_upload_imagem($campo = 'imagem')
+    {
+        if (empty($_FILES[$campo]['name'])) {
+            return null;
+        }
+
+        if (!is_dir('./uploads/questoes/')) {
+            mkdir('./uploads/questoes/', 0777, true);
+        }
+
+        $config['upload_path']   = './uploads/questoes/';
+        $config['allowed_types'] = 'jpg|jpeg|png|gif|webp';
+        $config['max_size']      = 2048;
+        $config['encrypt_name']  = TRUE;
+
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload($campo)) {
+            log_message('error', 'UPLOAD ERROR: ' . $this->upload->display_errors('', ''));
+            $this->session->set_flashdata('erro', $this->upload->display_errors());
+            return null;
+        }
+
+        return $this->upload->data('file_name');
     }
-
-    // cria a pasta se não existir
-    if (!is_dir('./uploads/questoes/')) {
-        mkdir('./uploads/questoes/', 0777, true);
-    }
-
-    $config['upload_path']   = './uploads/questoes/';
-    $config['allowed_types'] = 'jpg|jpeg|png|gif';
-    $config['max_size']      = 2048;
-    $config['encrypt_name']  = TRUE;
-
-    $this->upload->initialize($config);
-
-    if (!$this->upload->do_upload('imagem')) {
-
-        // Para DEBUG e visualizar o problema
-        log_message('error', 'UPLOAD ERROR: ' . $this->upload->display_errors('', ''));
-
-        // Mostra o erro para o usuário
-        $this->session->set_flashdata('erro', $this->upload->display_errors());
-        return null;  
-    }
-
-    $dados = $this->upload->data();
-    return $dados['file_name'];
-}
 
 public function logout()
 {

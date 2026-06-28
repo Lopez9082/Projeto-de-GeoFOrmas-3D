@@ -2,13 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'smtp.seuprovedor.com';
-$config['smtp_user'] = 'no-reply@seusite.com';
-$config['smtp_pass'] = 'SENHA_SMTP';
-$config['smtp_port'] = 587;
-$config['smtp_crypto'] = 'tls'; // ou 'ssl' se necessário
+$config['smtp_host'] = 'ssl://smtp.gmail.com';
+$config['smtp_port'] = 465;
+$config['smtp_user'] = 'mathgame.unig@gmail.com';
+$config['smtp_pass'] = 'pzaf mchv xsrv ntnj';
+$config['smtp_timeout'] = 30;
 $config['mailtype'] = 'text';
 $config['charset'] = 'utf-8';
 $config['newline'] = "\r\n";
 $config['crlf'] = "\r\n";
-$config['wordwrap'] = TRUE;
+$config['validation'] = TRUE;

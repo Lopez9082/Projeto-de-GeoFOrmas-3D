@@ -14,14 +14,37 @@ class Professor_model extends CI_Model {
      * AUTENTICA UM PROFESSOR PELO EMAIL E SENHA
      */
     public function autenticar($email, $senha)
-    {
-        return $this->db
-                    ->where('email', $email)
-                    ->where('senha', $senha) // SEM HASH, conforme você pediu
-                    ->get($this->tabela)
-                    ->row();
+{
+    $professor = $this->db
+        ->where('email', $email)
+        ->get($this->tabela)
+        ->row();
+
+    if (!$professor) {
+        return false;
     }
 
+    // Senha já em hash
+    if (password_verify($senha, $professor->senha)) {
+        return $professor;
+    }
+
+    // Compatibilidade com senhas antigas em texto puro
+    if ($professor->senha === $senha) {
+
+        // Atualiza automaticamente para hash
+        $hash = password_hash($senha, PASSWORD_DEFAULT);
+
+        $this->db->where('id', $professor->id)
+                 ->update($this->tabela, [
+                     'senha' => $hash
+                 ]);
+
+        return $professor;
+    }
+
+    return false;
+}
     public function criar($dados){
         $this->db->insert('professores', $dados);
         return $this->db->insert_id();

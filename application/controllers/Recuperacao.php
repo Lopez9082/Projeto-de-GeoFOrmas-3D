@@ -5,44 +5,79 @@ class Recuperacao extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('Usuario_model');
+        $this->load->model('Professor_model');
         $this->load->library(['session','email']);
         $this->load->helper(['url','form']);
     }
 
+    public function index(){
+        redirect('recuperacao/solicitar');
+    }
+
     // tela para solicitar link
-    public function solicitar(){
-        if($this->input->post()){
+    public function solicitar()
+    {
+        if ($this->input->post()) {
+
+            // Obtém o e-mail digitado no formulário
             $email = $this->input->post('email', true);
+
+            // Procura primeiro na tabela de usuários
             $usuario = $this->Usuario_model->buscar_por_email($email);
-            if(!$usuario){
-                $this->session->set_flashdata('erro','E-mail não encontrado.');
+            $tipo = 'usuario';
+
+            // Se não encontrar, procura na tabela de professores
+            if (!$usuario) {
+                $usuario = $this->Professor_model->buscar_por_email($email);
+                $tipo = 'professor';
+            }
+
+            // Se não encontrar em nenhuma das duas tabelas
+            if (!$usuario) {
+                $this->session->set_flashdata('erro', 'E-mail não encontrado.');
                 redirect('recuperacao/solicitar');
             }
-            // gerar token e salvar
+
+            // Gera o token
             $token = bin2hex(random_bytes(24));
-            $expiracao = date('Y-m-d H:i:s', strtotime('+2 hour'));
+            $expiracao = date('Y-m-d H:i:s', strtotime('+2 hours'));
+
+            // Salva o token no banco
             $this->db->insert('recuperacao_senha', [
-                'usuario_id'=>$usuario->id,
-                'token'=>$token,
-                'expiracao'=>$expiracao
+                'usuario_id' => $usuario->id,
+                'tipo'       => $tipo,
+                'token'      => $token,
+                'expiracao'  => $expiracao
             ]);
-            // enviar email com link
-            $link = site_url('recuperacao/resetar?token='.$token);
+
+            // Link de recuperação
+            $link = site_url('recuperacao/resetar?token=' . $token);
+
+            // Assunto e mensagem
             $assunto = 'Recuperação de senha - App Matemática';
-            $mensagem = "Olá {$usuario->nome},\n\nClique no link abaixo para redefinir sua senha (válido por 2 horas):\n\n{$link}\n\nSe você não solicitou, ignore esta mensagem.";
-            // envia via library email do CodeIgniter (configurar smtp em application/config/email.php ou config)
-            $this->email->from('no-reply@seusite.com','App Matemática');
+            $mensagem = "Olá {$usuario->nome},\n\n";
+            $mensagem .= "Clique no link abaixo para redefinir sua senha (válido por 2 horas):\n\n";
+            $mensagem .= "{$link}\n\n";
+            $mensagem .= "Se você não solicitou esta alteração, ignore este e-mail.";
+
+            // Configuração do e-mail
+            $this->email->from('mathgame.unig@gmail.com', 'App Matemática');
             $this->email->to($usuario->email);
             $this->email->subject($assunto);
             $this->email->message($mensagem);
-            if($this->email->send()){
-                $this->session->set_flashdata('sucesso','E-mail de recuperação enviado (verifique sua caixa).');
+
+            // Envia
+            if ($this->email->send()) {
+                $this->session->set_flashdata('sucesso', 'E-mail de recuperação enviado. Verifique sua caixa de entrada.');
             } else {
-                // fallback: salvar token e mostrar link (em dev). Em produção retire esta exposição.
-                $this->session->set_flashdata('erro','Falha ao enviar e-mail. Contate o administrador.');
+                $this->session->set_flashdata('erro', 'Falha ao enviar o e-mail de recuperação.');
+                // Para depuração, você pode descomentar a linha abaixo:
+                // echo $this->email->print_debugger();
             }
+
             redirect('recuperacao/solicitar');
         }
+
         $this->load->view('auth/recuperar_senha');
     }
 
@@ -64,8 +99,13 @@ class Recuperacao extends CI_Controller {
             }
             // atualizar senha
             $hash = password_hash($nova, PASSWORD_DEFAULT);
-            $this->db->where('id',$row->usuario_id)->update('usuarios',['senha_hash'=>$hash]);
-            // marca token como usado
+            if($row->tipo == 'usuario'){
+                $this->db->where('id', $row->usuario_id)
+                        ->update('usuarios', ['senha' => $hash]);
+            }else{
+                $this->db->where('id', $row->usuario_id)
+                        ->update('professores', ['senha' => $hash]);
+            }            // marca token como usado
             $this->db->where('id',$row->id)->update('recuperacao_senha',['usado'=>1]);
             $this->session->set_flashdata('sucesso','Senha redefinida com sucesso. Faça login.');
             redirect('login');
