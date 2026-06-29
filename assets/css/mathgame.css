@@ -1,0 +1,107 @@
+:root{
+  --bg-void:#03020a;
+  --bg-deep:#07051a;
+  --bg-card:#120f2e;
+  --bg-card2:#160d30;
+  --neon-cyan:#00f5ff;
+  --neon-pink:#ff00c8;
+  --neon-green:#39ff14;
+  --neon-yellow:#ffe500;
+  --neon-purple:#bf00ff;
+  --glow-cyan:0 0 8px #00f5ff,0 0 20px rgba(0,245,255,.65);
+  --glow-pink:0 0 8px #ff00c8,0 0 20px rgba(255,0,200,.6);
+  --glow-green:0 0 8px #39ff14,0 0 20px rgba(57,255,20,.55);
+  --text-bright:#e8f4ff;
+  --text-dim:#a9bce0;
+  --text-ghost:#8a9ec2;
+  --font-display:'Orbitron',monospace;
+  --font-mono:'Share Tech Mono',monospace;
+  --font-body:'Rajdhani',sans-serif;
+  --radius:10px;
+  --radius-lg:16px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%,rgba(0,245,255,.07),transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 110%,rgba(191,0,255,.08),transparent 60%),
+    var(--bg-void);
+  color:var(--text-bright);
+  font-family:var(--font-body);
+}
+
+a{color:var(--neon-cyan);text-decoration:none}
+h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:.05em}
+p,li,label,small{color:var(--text-dim)}
+
+.card,.login-card{
+  background:linear-gradient(145deg,rgba(18,15,46,.96),rgba(10,8,28,.96));
+  border:1px solid rgba(0,245,255,.22);
+  border-radius:var(--radius-lg);
+  box-shadow:0 0 24px rgba(0,245,255,.1);
+}
+
+input,select,textarea{
+  background:#0a0f1a;
+  color:var(--text-bright);
+  border:1px solid rgba(0,245,255,.25);
+  border-radius:var(--radius);
+}
+
+.btn,button[type="submit"],input[type="submit"]{
+  border:0;
+  border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--neon-cyan),var(--neon-purple));
+  color:#001216;
+  font-family:var(--font-display);
+  font-weight:800;
+  cursor:pointer;
+}
+
+html[data-theme="light"]{
+  --bg-void:#050713;
+  --bg-deep:#0b1024;
+  --bg-card:#111a33;
+  --bg-card2:#16203d;
+  --neon-cyan:#00e5ff;
+  --neon-pink:#ff2fc8;
+  --neon-green:#4dff55;
+  --neon-yellow:#ffe14d;
+  --neon-purple:#b665ff;
+  --glow-cyan:0 0 8px #00e5ff,0 0 22px rgba(0,229,255,.55);
+  --glow-pink:0 0 8px #ff2fc8,0 0 22px rgba(255,47,200,.5);
+  --glow-green:0 0 8px #4dff55,0 0 22px rgba(77,255,85,.45);
+  --text-bright:#f7fbff;
+  --text-dim:#c4d4f4;
+  --text-ghost:#98aad0;
+}
+
+html[data-theme="light"] body{
+  background:
+    radial-gradient(circle at top left,rgba(0,229,255,.16),transparent 38%),
+    radial-gradient(circle at bottom right,rgba(255,47,200,.12),transparent 40%),
+    var(--bg-void);
+  color:var(--text-bright);
+}
+
+html[data-theme="light"] .card,
+html[data-theme="light"] .login-card{
+  background:linear-gradient(145deg,rgba(17,26,51,.98),rgba(10,16,36,.98));
+  border-color:rgba(0,229,255,.32);
+  box-shadow:0 14px 34px rgba(0,0,0,.3);
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea{
+  background:#080d1d;
+  color:var(--text-bright);
+  border-color:rgba(0,229,255,.38);
+}
+
+html[data-theme="light"] *{
+  text-shadow:none;
+}

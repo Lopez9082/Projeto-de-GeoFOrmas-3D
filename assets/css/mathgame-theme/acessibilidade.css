@@ -1,0 +1,126 @@
+/* ══════════════════════════════════════════════
+   ACESSIBILIDADE — MathGame
+   Aumenta tamanho de fonte, nitidez de renderização
+   e contraste para pessoas com baixa visão.
+   Este arquivo deve ser carregado DEPOIS do CSS
+   da página (sobrescreve por ordem de cascata).
+══════════════════════════════════════════════ */
+
+/* 1) TAMANHO: escala todo texto em rem do projeto (~+10%) */
+html{
+  font-size:110% !important;
+}
+
+/* 2) NITIDEZ: renderização mais limpa e legível */
+html, body{
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+
+/* 3) LEGIBILIDADE: espaçamento mínimo de linha confortável
+   (não reduz nada que já seja maior que isso) */
+p, li, label, .section-sub, .feature-card p, .sobre-card p{
+  line-height:1.7 !important;
+}
+
+/* 4) FOCO VISÍVEL: essencial para navegação por teclado/leitor de tela */
+a:focus-visible, button:focus-visible, input:focus-visible,
+textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid #00f5ff !important;
+  outline-offset:2px !important;
+}
+
+/* 5) CONTRASTE: reforça textos apagados que ficam muito próximos
+   da cor do fundo em telas mais escuras/sensíveis */
+:root{
+  --text-dim:#9fb4dd;
+  --text-ghost:#7e93bf;
+  --dim:#a9bce0;
+  --ghost:#8a9ec2;
+  --text-dim:#a9bce0;
+}
+
+/* placeholders muito apagados (ex.: tela de login do professor) */
+::placeholder{
+  color:#9fb4dd !important;
+  opacity:1 !important;
+}
+
+/* 6) Garante leitura mínima confortável: nenhum texto abaixo disso */
+small, .hstat-lbl, .nav-links a, .section-tag, .hero-tag{
+  font-size:max(0.78rem, 12.5px);
+}
+
+/* ══════════════════════════════════════════════
+   BOTÃO DE ALTERNÂNCIA CLARO/ESCURO
+   (cores fixas — funciona igual em qualquer página)
+══════════════════════════════════════════════ */
+#mg-a11y-toggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  border:2px solid #00f5ff;
+  background:#0c0f1c;
+  color:#fff;
+  font-size:1.4rem;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:99999;
+  box-shadow:0 0 14px rgba(0,245,255,.5);
+  transition:transform .2s ease;
+}
+#mg-a11y-toggle:hover{transform:scale(1.08)}
+#mg-a11y-toggle:focus-visible{outline:3px solid #00f5ff;outline-offset:3px}
+
+/* quando o modo claro está ativo, o próprio botão também troca de cara */
+html[data-theme="light"] #mg-a11y-toggle{
+  background:#080d1d;
+  color:#f7fbff;
+  border-color:#00e5ff;
+  box-shadow:0 0 14px rgba(0,229,255,.45);
+}
+
+/* ══════════════════════════════════════════════
+   SELO INSTITUCIONAL — PIC / UNIG
+══════════════════════════════════════════════ */
+#mg-selo-pic{
+  position:fixed;
+  bottom:18px;
+  left:14px;
+  z-index:99998;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(8,10,20,.72);
+  border:1px solid rgba(0,245,255,.35);
+  backdrop-filter:blur(4px);
+  color:#cfe3ff;
+  font-family:'Share Tech Mono',monospace;
+  font-size:.62rem;
+  line-height:1.25;
+  letter-spacing:.02em;
+  max-width:200px;
+  pointer-events:none;
+  opacity:.88;
+}
+#mg-selo-pic .mg-selo-icone{font-size:1rem;flex-shrink:0}
+
+html[data-theme="light"] #mg-selo-pic{
+  background:rgba(8,13,29,.88);
+  border-color:rgba(0,229,255,.4);
+  color:#d8e7ff;
+}
+
+@media(max-width:680px){
+  #mg-selo-pic{font-size:.56rem;max-width:150px;padding:6px 10px;bottom:80px}
+  #mg-a11y-toggle{width:46px;height:46px;font-size:1.2rem}
+}

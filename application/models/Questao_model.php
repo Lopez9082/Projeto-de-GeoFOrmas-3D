@@ -1,0 +1,100 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Questao_model extends CI_Model {
+
+        protected $table = "questoes";
+
+    public function __construct() {
+        parent::__construct();
+
+    }
+
+    // 🔹 LISTAR TODAS AS QUESTÕES DO PROFESSOR
+    public function listar_do_professor($professor_id)
+{
+    return $this->db
+        ->select("questoes.*, temas.titulo AS tema_titulo")
+        ->from("questoes")
+        ->join("temas", "temas.id = questoes.tema_id", "left")
+        ->where("questoes.criado_por", $professor_id)
+        ->order_by("questoes.id", "DESC")
+        ->order_by("
+    CASE 
+        WHEN nivel = 'Ensino Fundamental I' THEN 1
+        WHEN nivel = 'Ensino Fundamental II' THEN 2
+        WHEN nivel = 'Ensino Medio' THEN 3
+        ELSE 4
+    END
+", "ASC")
+        ->get()
+        ->result();
+}
+
+
+    // 🔹 INSERIR NOVA QUESTÃO
+    public function inserir($dados)
+    {
+        return $this->db->insert('questoes', $dados);
+    }
+
+    // 🔹 BUSCAR UMA ÚNICA QUESTÃO
+    public function buscar($id)
+    {
+        return $this->db->where('id', $id)->get('questoes')->row();
+    }
+
+    // 🔹 ATUALIZAR QUESTÃO
+    public function atualizar($id, $dados)
+    {
+        return $this->db->where('id', $id)->update('questoes', $dados);
+    }
+
+    // 🔹 EXCLUIR QUESTÃO
+    public function excluir($id)
+    {
+        return $this->db->where('id', $id)->delete('questoes');
+    }
+
+    public function ocultar($id, $motivo)
+{
+    return $this->db->where('id', $id)->update('questoes', [
+        'excluida' => 1,
+        'motivo_exclusao' => $motivo
+    ]);
+}
+
+     public function listar_por_tema($tema_id){
+        return $this->db
+            ->where('tema_id', $tema_id)
+            ->order_by('criado_em','ASC')
+            ->get($this->table)
+            ->result();
+    }
+
+    
+
+    public function buscarQuestoes($tema, $nivel) {
+        return $this->db
+            ->where("tema_id", $tema)
+            ->where("nivel", $nivel)
+            ->where("excluida", 0)
+            ->order_by("RAND()")
+            ->limit(10)
+            ->get("questoes")
+            ->result();
+    }
+
+    // Retorna todos os temas cadastrados
+    public function listarTemas() {
+        $this->db->select('*');
+        $this->db->from('temas'); // ou o nome da tabela de temas
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function getTema($tema_id) {
+        return $this->db->get_where('temas', ['id' => $tema_id])->row();
+    }
+   
+}
