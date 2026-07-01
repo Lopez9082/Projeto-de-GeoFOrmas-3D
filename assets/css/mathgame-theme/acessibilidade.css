@@ -244,10 +244,6 @@ html[data-theme="light"] h2,
 html[data-theme="light"] h3,
 html[data-theme="light"] h4,
 html[data-theme="light"] .brand,
-<<<<<<< HEAD
-html[data-theme="light"] .nav-logo,
-=======
->>>>>>> fa56ba2 (Eli-th)
 html[data-theme="light"] .sidebar-logo-text,
 html[data-theme="light"] .page-title h2,
 html[data-theme="light"] .dashboard-title,
@@ -261,8 +257,6 @@ html[data-theme="light"] .stat-val{
   -webkit-text-stroke:0 !important;
 }
 
-<<<<<<< HEAD
-=======
 html[data-theme="light"] .nav-logo,
 html[data-theme="light"] .hero-text h1,
 html[data-theme="light"] .hero-text h1 span{
@@ -270,7 +264,6 @@ html[data-theme="light"] .hero-text h1 span{
   text-shadow:var(--glow-p) !important;
 }
 
->>>>>>> fa56ba2 (Eli-th)
 html[data-theme="dark"] h1,
 html[data-theme="dark"] h2,
 html[data-theme="dark"] h3,
