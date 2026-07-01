@@ -946,6 +946,11 @@
         box-shadow: var(--glow-p)
       }
 
+      html[data-theme="light"] .btn-submit.aluno,
+      html[data-theme="light"] .btn-submit.professor {
+        color: #ffffff !important;
+      }
+
       .btn-submit.professor:hover {
         box-shadow: 0 0 20px var(--pink), 0 0 50px rgba(255, 0, 200, .4);
         transform: translateY(-2px)
@@ -1343,53 +1348,52 @@ html[data-theme="light"] .form-title2,
 html[data-theme="light"] .step-title,
 html[data-theme="light"] .role-name,
 html[data-theme="light"] .footer-brand{
-  color:#0c1322 !important;
-  -webkit-text-stroke:0.5px #5b6577;
+  color:#0b1220 !important;
+  -webkit-text-stroke:0;
 }
 
-/* Modo claro invertido: login com contraste alto */
+/* Modo claro: contraste alto e legível */
 html[data-theme="light"]{
-  --bg:#050713;
-  --bg-card:#111a33;
-  --cyan:#00e5ff;
-  --pink:#ff2fc8;
-  --green:#4dff55;
-  --purple:#b665ff;
-  --yellow:#ffe14d;
-  --glow-c:0 0 8px #00e5ff,0 0 22px rgba(0,229,255,.55);
-  --glow-p:0 0 8px #ff2fc8,0 0 22px rgba(255,47,200,.5);
-  --glow-g:0 0 8px #4dff55,0 0 22px rgba(77,255,85,.45);
-  --dim:#c4d4f4;
-  --ghost:#98aad0;
+  --bg:#f4f7fb;
+  --bg-card:#ffffff;
+  --cyan:#007c91;
+  --pink:#b0007f;
+  --green:#147d24;
+  --purple:#6d18b8;
+  --yellow:#836200;
+  --text:#0b1220;
+  --text-bright:#0b1220;
+  --text-dim:#334155;
+  --text-ghost:#52627a;
+  --glow-c:0 0 0 transparent;
+  --glow-p:0 0 0 transparent;
+  --glow-g:0 0 0 transparent;
 }
 html[data-theme="light"] body{
-  background:
-    radial-gradient(circle at top left,rgba(0,229,255,.16),transparent 38%),
-    radial-gradient(circle at bottom right,rgba(255,47,200,.12),transparent 40%),
-    var(--bg) !important;
-  color:#f7fbff !important;
+  background:#f4f7fb !important;
+  color:#0b1220 !important;
 }
 html[data-theme="light"] .login-card,
 html[data-theme="light"] .panel,
 html[data-theme="light"] .panel-left,
 html[data-theme="light"] .panel-right,
 html[data-theme="light"] .role-card{
-  background:linear-gradient(145deg,rgba(17,26,51,.98),rgba(10,16,36,.98)) !important;
-  border-color:rgba(0,229,255,.3) !important;
-  box-shadow:0 14px 34px rgba(0,0,0,.3) !important;
+  background:#ffffff !important;
+  border-color:rgba(15,23,42,.16) !important;
+  box-shadow:0 12px 26px rgba(15,23,42,.10) !important;
 }
 html[data-theme="light"] .field input,
 html[data-theme="light"] input,
 html[data-theme="light"] select{
-  background:#080d1d !important;
-  color:#f7fbff !important;
-  border-color:rgba(0,229,255,.38) !important;
+  background:#ffffff !important;
+  color:#0b1220 !important;
+  border-color:rgba(15,23,42,.25) !important;
 }
 html[data-theme="light"] .brand,
 html[data-theme="light"] .form-title2,
 html[data-theme="light"] .step-title,
 html[data-theme="light"] .role-name,
 html[data-theme="light"] .footer-brand{
-  color:#f7fbff !important;
+  color:#0b1220 !important;
   -webkit-text-stroke:0;
 }

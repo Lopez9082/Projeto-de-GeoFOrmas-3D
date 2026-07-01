@@ -302,8 +302,25 @@ html[data-theme="light"] .creator-card{
 }
 html[data-theme="light"] .navbar,
 html[data-theme="light"] .site-footer{
-  background:rgba(255,255,255,.92);
-  border-color:rgba(0,120,140,.15);
+  background:#ffffff !important;
+  border-color:rgba(15,23,42,.16) !important;
+}
+html[data-theme="light"] .site-footer{
+  color:#334155 !important;
+}
+html[data-theme="light"] .site-footer .footer-brand{
+  color:#0b1220 !important;
+  -webkit-text-stroke:0 !important;
+}
+html[data-theme="light"] .nav-btn{
+  color:#ffffff !important;
+  box-shadow:0 0 20px rgba(0,137,160,.35),0 0 40px rgba(124,15,196,.18) !important;
+}
+html[data-theme="light"] .nav-btn:hover{
+  box-shadow:0 0 20px rgba(0,137,160,.6),0 0 40px rgba(124,15,196,.3) !important;
+}
+html[data-theme="light"] .btn-primary{
+  color:#ffffff !important;
 }
 html[data-theme="light"] h1,html[data-theme="light"] h2,
 html[data-theme="light"] h3,html[data-theme="light"] h4,
@@ -315,78 +332,4 @@ html[data-theme="light"] .site-footer .footer-brand,html[data-theme="light"] .he
 html[data-theme="light"] .section-tag,html[data-theme="light"] .section-group-title{
   -webkit-text-stroke:0.6px #5b6577;
   text-shadow:none;
-}
-
-/* Modo claro invertido: mais contraste e cores mais nitidas */
-html[data-theme="light"]{
-  --bg-void:#050713;--bg-deep:#0b1024;--bg-card:#111a33;--bg-card2:#16203d;
-  --neon-cyan:#00e5ff;--neon-pink:#ff2fc8;--neon-green:#4dff55;
-  --neon-yellow:#ffe14d;--neon-purple:#b665ff;
-  --glow-cyan:0 0 8px #00e5ff,0 0 22px rgba(0,229,255,.55);
-  --glow-pink:0 0 8px #ff2fc8,0 0 22px rgba(255,47,200,.5);
-  --glow-green:0 0 8px #4dff55,0 0 22px rgba(77,255,85,.45);
-  --glow-purple:0 0 8px #b665ff,0 0 22px rgba(182,101,255,.45);
-  --text-bright:#f7fbff;--text-dim:#c4d4f4;--text-ghost:#98aad0;
-}
-html[data-theme="light"] body{
-  background-color:var(--bg-void);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 20% -10%,rgba(0,229,255,.16) 0%,transparent 60%),
-    radial-gradient(ellipse 70% 45% at 85% 105%,rgba(255,47,200,.12) 0%,transparent 62%),
-    repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(0,229,255,.035) 60px,rgba(0,229,255,.035) 61px),
-    repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,.025) 60px,rgba(255,255,255,.025) 61px);
-  color:var(--text-bright);
-}
-html[data-theme="light"] body::before{
-  background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(255,255,255,.035) 3px,rgba(255,255,255,.035) 4px);
-}
-html[data-theme="light"] .navbar,
-html[data-theme="light"] .site-footer{
-  background:rgba(5,7,19,.94);
-  border-color:rgba(0,229,255,.35);
-}
-html[data-theme="light"] .nav-links.open{
-  background:rgba(5,7,19,.98);
-}
-html[data-theme="light"] .sobre-card,
-html[data-theme="light"] .feature-card,
-html[data-theme="light"] .creator-card{
-  background:linear-gradient(145deg,rgba(17,26,51,.98),rgba(10,16,36,.98));
-  border-color:rgba(0,229,255,.35);
-  box-shadow:0 12px 32px rgba(0,0,0,.28);
-}
-html[data-theme="light"] .hero-text h1,
-html[data-theme="light"] .section-title,
-html[data-theme="light"] .creator-name{
-  color:#ffffff;
-}
-html[data-theme="light"] p,
-html[data-theme="light"] li,
-html[data-theme="light"] .hero-text p,
-html[data-theme="light"] .section-sub,
-html[data-theme="light"] .sobre-card p,
-html[data-theme="light"] .sobre-card li,
-html[data-theme="light"] .feature-card p,
-html[data-theme="light"] .ods-text p,
-html[data-theme="light"] .creator-role{
-  color:var(--text-dim);
-}
-html[data-theme="light"] h1,html[data-theme="light"] h2,
-html[data-theme="light"] h3,html[data-theme="light"] h4,
-html[data-theme="light"] .nav-logo,html[data-theme="light"] .hero-text h1,
-html[data-theme="light"] .section-title,html[data-theme="light"] .sobre-card h3,
-html[data-theme="light"] .feature-card h3,html[data-theme="light"] .ods-text h3,
-html[data-theme="light"] .creator-name,html[data-theme="light"] .hstat-val,
-html[data-theme="light"] .site-footer .footer-brand,html[data-theme="light"] .hero-tag,
-html[data-theme="light"] .section-tag,html[data-theme="light"] .section-group-title{
-  -webkit-text-stroke:0;
-  text-stroke:0;
-}
-html[data-theme="light"] p,html[data-theme="light"] li,
-html[data-theme="light"] .section-sub,html[data-theme="light"] .sobre-card p,
-html[data-theme="light"] .feature-card p,html[data-theme="light"] .ods-text p,
-html[data-theme="light"] .creator-role,html[data-theme="light"] .nav-links a,
-html[data-theme="light"] .hstat-lbl,html[data-theme="light"] .hero-text p{
-  -webkit-text-stroke:0;
-  text-stroke:0;
 }

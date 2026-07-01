@@ -258,39 +258,5 @@ html[data-theme="light"] input[type="file"]{
   color:#0c1322 !important;
   border-color:rgba(0,137,160,.25) !important;
 }
-html[data-theme="light"] .btn-secondary{ color:#3a4a63; }
+html[data-theme="light"] .btn-secondary{ color:#0b1220; }
 html[data-theme="light"] *{ text-shadow:none !important; }
-
-/* Modo claro invertido: formulario com campos mais nitidos */
-html[data-theme="light"]{
-  --bg-void:#050713;
-  --text-dim:#c4d4f4;
-  --neon-blue:#00e5ff;
-  --neon-cyan:#00e5ff;
-  --neon-pink:#ff2fc8;
-}
-html[data-theme="light"] body{
-  background:
-    radial-gradient(circle at top left,rgba(0,229,255,.14),transparent 36%),
-    radial-gradient(circle at bottom right,rgba(255,47,200,.1),transparent 38%),
-    var(--bg-void);
-  color:#f7fbff;
-}
-html[data-theme="light"] .card{
-  background:linear-gradient(145deg,rgba(17,26,51,.98),rgba(10,16,36,.98)) !important;
-  border-color:rgba(0,229,255,.32);
-  box-shadow:0 14px 34px rgba(0,0,0,.3);
-}
-html[data-theme="light"] input[type="text"],
-html[data-theme="light"] select,
-html[data-theme="light"] textarea,
-html[data-theme="light"] input[type="file"]{
-  background:#080d1d !important;
-  color:#f7fbff !important;
-  border-color:rgba(0,229,255,.38) !important;
-}
-html[data-theme="light"] input::placeholder,
-html[data-theme="light"] textarea::placeholder{
-  color:#8fa3cd;
-}
-html[data-theme="light"] .btn-secondary{ color:#c4d4f4; }

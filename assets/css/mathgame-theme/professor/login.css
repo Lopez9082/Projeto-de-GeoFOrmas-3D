@@ -140,7 +140,7 @@ body{
 
   background:rgba(0,0,0,.45);
 
-  color:var(--text);
+  color:var(--text-bright);
 
   font-family:var(--font-mono);
 
