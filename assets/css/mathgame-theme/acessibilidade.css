@@ -41,6 +41,226 @@ textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible{
   --text-dim:#a9bce0;
 }
 
+/* 6) TEMA GLOBAL: claro e escuro com contraste realmente oposto.
+   Este arquivo vem depois dos CSS das telas, entao centraliza a troca. */
+html[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f4f7fb;
+  --bg-main:#f4f7fb;
+  --bg-dark:#f4f7fb;
+  --bg-sidebar:#ffffff;
+  --bg-card:#ffffff;
+  --card:#ffffff;
+  --surface:#ffffff;
+  --cyan:#007c91;
+  --neon-cyan:#007c91;
+  --pink:#b0007f;
+  --neon-pink:#b0007f;
+  --purple:#6d18b8;
+  --neon-purple:#6d18b8;
+  --green:#147d24;
+  --neon-green:#147d24;
+  --yellow:#836200;
+  --text:#0b1220;
+  --text-main:#0b1220;
+  --text-bright:#0b1220;
+  --text-dim:#334155;
+  --text-ghost:#52627a;
+  --dim:#334155;
+  --ghost:#52627a;
+  --glow-c:0 0 0 transparent;
+  --glow-p:0 0 0 transparent;
+  --glow-g:0 0 0 transparent;
+}
+
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#050713;
+  --bg-main:#050713;
+  --bg-dark:#050713;
+  --bg-sidebar:#090f22;
+  --bg-card:#101a33;
+  --card:#101a33;
+  --surface:#101a33;
+  --cyan:#00e5ff;
+  --neon-cyan:#00e5ff;
+  --pink:#ff2fc8;
+  --neon-pink:#ff2fc8;
+  --purple:#b665ff;
+  --neon-purple:#b665ff;
+  --green:#4dff55;
+  --neon-green:#4dff55;
+  --yellow:#ffe14d;
+  --text:#f7fbff;
+  --text-main:#f7fbff;
+  --text-bright:#f7fbff;
+  --text-dim:#c4d4f4;
+  --text-ghost:#98aad0;
+  --dim:#c4d4f4;
+  --ghost:#98aad0;
+  --glow-c:0 0 8px rgba(0,229,255,.9),0 0 22px rgba(0,229,255,.5);
+  --glow-p:0 0 8px rgba(255,47,200,.85),0 0 22px rgba(255,47,200,.45);
+  --glow-g:0 0 8px rgba(77,255,85,.85),0 0 22px rgba(77,255,85,.42);
+}
+
+html[data-theme="light"] body{
+  background:
+    radial-gradient(circle at top left,rgba(0,124,145,.08),transparent 34%),
+    linear-gradient(180deg,#ffffff 0%,#eef3fb 100%) !important;
+  color:#0b1220 !important;
+}
+
+html[data-theme="dark"] body{
+  background:
+    radial-gradient(circle at top left,rgba(0,229,255,.16),transparent 36%),
+    radial-gradient(circle at bottom right,rgba(255,47,200,.13),transparent 40%),
+    #050713 !important;
+  color:#f7fbff !important;
+}
+
+html[data-theme="light"] *,
+html[data-theme="light"] *::before,
+html[data-theme="light"] *::after{
+  text-shadow:none !important;
+}
+
+html[data-theme="light"] .card,
+html[data-theme="light"] .login-card,
+html[data-theme="light"] .panel,
+html[data-theme="light"] .panel-left,
+html[data-theme="light"] .panel-right,
+html[data-theme="light"] .role-card,
+html[data-theme="light"] .question-card,
+html[data-theme="light"] .level-card,
+html[data-theme="light"] .feature-card,
+html[data-theme="light"] .sobre-card,
+html[data-theme="light"] .creator-card,
+html[data-theme="light"] .sidebar,
+html[data-theme="light"] .topbar,
+html[data-theme="light"] .user-box,
+html[data-theme="light"] .feature-item{
+  background:#ffffff !important;
+  border-color:rgba(15,23,42,.16) !important;
+  box-shadow:0 12px 26px rgba(15,23,42,.10) !important;
+  color:#0b1220 !important;
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .login-card,
+html[data-theme="dark"] .panel,
+html[data-theme="dark"] .panel-left,
+html[data-theme="dark"] .panel-right,
+html[data-theme="dark"] .role-card,
+html[data-theme="dark"] .question-card,
+html[data-theme="dark"] .level-card,
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .sobre-card,
+html[data-theme="dark"] .creator-card,
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .topbar,
+html[data-theme="dark"] .user-box,
+html[data-theme="dark"] .feature-item{
+  background:linear-gradient(145deg,rgba(16,26,51,.98),rgba(7,12,29,.98)) !important;
+  border-color:rgba(0,229,255,.30) !important;
+  box-shadow:0 18px 36px rgba(0,0,0,.34),0 0 18px rgba(0,229,255,.10) !important;
+  color:#f7fbff !important;
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] .brand,
+html[data-theme="light"] .nav-logo,
+html[data-theme="light"] .sidebar-logo-text,
+html[data-theme="light"] .page-title h2,
+html[data-theme="light"] .dashboard-title,
+html[data-theme="light"] .form-title2,
+html[data-theme="light"] .step-title,
+html[data-theme="light"] .role-name,
+html[data-theme="light"] .section-title,
+html[data-theme="light"] .creator-name,
+html[data-theme="light"] .stat-val{
+  color:#0b1220 !important;
+  -webkit-text-stroke:0 !important;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] .brand,
+html[data-theme="dark"] .nav-logo,
+html[data-theme="dark"] .sidebar-logo-text,
+html[data-theme="dark"] .page-title h2,
+html[data-theme="dark"] .dashboard-title,
+html[data-theme="dark"] .form-title2,
+html[data-theme="dark"] .step-title,
+html[data-theme="dark"] .role-name,
+html[data-theme="dark"] .section-title,
+html[data-theme="dark"] .creator-name,
+html[data-theme="dark"] .stat-val{
+  color:#00e5ff !important;
+  text-shadow:0 0 10px rgba(0,229,255,.75) !important;
+  -webkit-text-stroke:0 !important;
+}
+
+html[data-theme="light"] p,
+html[data-theme="light"] li,
+html[data-theme="light"] label,
+html[data-theme="light"] td,
+html[data-theme="light"] a,
+html[data-theme="light"] .section-sub,
+html[data-theme="light"] .card-desc,
+html[data-theme="light"] .role-desc,
+html[data-theme="light"] .question-text,
+html[data-theme="light"] .option-btn{
+  color:#182235 !important;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] li,
+html[data-theme="dark"] label,
+html[data-theme="dark"] td,
+html[data-theme="dark"] a,
+html[data-theme="dark"] .section-sub,
+html[data-theme="dark"] .card-desc,
+html[data-theme="dark"] .role-desc,
+html[data-theme="dark"] .question-text,
+html[data-theme="dark"] .option-btn{
+  color:#dbeafe !important;
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea{
+  background:#ffffff !important;
+  color:#0b1220 !important;
+  border-color:rgba(15,23,42,.28) !important;
+  box-shadow:none !important;
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea{
+  background:#070d1d !important;
+  color:#f7fbff !important;
+  border-color:rgba(0,229,255,.38) !important;
+}
+
+html[data-theme="light"] th{
+  color:#005f73 !important;
+  border-color:rgba(15,23,42,.20) !important;
+}
+
+html[data-theme="dark"] th{
+  color:#00e5ff !important;
+  border-color:rgba(0,229,255,.30) !important;
+}
+
+html[data-theme="light"] td{ border-color:rgba(15,23,42,.12) !important; }
+html[data-theme="dark"] td{ border-color:rgba(255,255,255,.08) !important; }
+
 /* placeholders muito apagados (ex.: tela de login do professor) */
 ::placeholder{
   color:#9fb4dd !important;

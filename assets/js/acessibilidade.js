@@ -13,17 +13,15 @@
     try { salvo = localStorage.getItem(STORAGE_KEY); } catch (e) {}
     if (salvo === "light") {
       document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
     }
   }
 
   function alternarTema() {
     var atual = document.documentElement.getAttribute("data-theme");
     var novo = atual === "light" ? "dark" : "light";
-    if (novo === "light") {
-      document.documentElement.setAttribute("data-theme", "light");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-    }
+    document.documentElement.setAttribute("data-theme", novo);
     try { localStorage.setItem(STORAGE_KEY, novo); } catch (e) {}
     atualizarIconeBotao();
   }
