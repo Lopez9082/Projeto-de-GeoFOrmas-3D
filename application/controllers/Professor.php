@@ -53,8 +53,10 @@ class Professor extends CI_Controller {
 
             redirect('professor/dashboard');
 
-        } else {
+         } else {
             $this->session->set_flashdata('erro', 'E-mail ou senha incorretos');
+            $this->session->set_flashdata('papel', 'professor'); // ou 'aluno'
+
             redirect('auth/login');
         }
     }

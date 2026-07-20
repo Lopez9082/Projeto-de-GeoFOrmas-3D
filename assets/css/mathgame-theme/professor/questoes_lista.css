@@ -1,0 +1,167 @@
+/* ===========================
+   Cabeçalho
+=========================== */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+}
+
+.page-header h2{
+    margin:0 0 4px;
+}
+
+.page-subtitle{
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    color:var(--text-dim);
+    letter-spacing:.08em;
+}
+
+/* ===========================
+   Card
+=========================== */
+
+.questoes-card{
+    padding:0;
+    overflow:hidden;
+}
+
+/* ===========================
+   Tabela
+=========================== */
+
+.table-responsive{
+    overflow-x:auto;
+}
+
+.questoes-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.questoes-table th{
+
+    background:rgba(0,245,255,.06);
+
+    color:var(--neon-cyan);
+
+    padding:14px;
+
+    text-align:left;
+
+    font-family:var(--font-display);
+
+    font-size:.72rem;
+
+    letter-spacing:.08em;
+
+    border-bottom:1px solid rgba(0,245,255,.18);
+}
+
+.questoes-table td{
+
+    padding:14px;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+    vertical-align:middle;
+}
+
+.questoes-table tbody tr{
+
+    transition:.25s;
+}
+
+.questoes-table tbody tr:hover{
+
+    background:rgba(0,245,255,.04);
+}
+
+.questao-id{
+
+    font-family:var(--font-mono);
+
+    color:var(--text-dim);
+}
+
+.questao-enunciado{
+
+    max-width:240px;
+}
+
+.questao-imagem{
+
+    width:60px;
+
+    border-radius:6px;
+
+    border:1px solid rgba(0,245,255,.2);
+}
+
+.sem-imagem{
+
+    color:var(--text-ghost);
+}
+
+.questao-motivo{
+
+    max-width:140px;
+
+    color:var(--text-dim);
+}
+
+.questao-oculta{
+
+    opacity:.55;
+}
+
+/* ===========================
+   Ações
+=========================== */
+
+.acoes{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:8px;
+}
+
+.btn-sm{
+
+    padding:7px 12px;
+
+    font-size:.65rem;
+}
+
+.btn-danger{
+
+    background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));
+}
+
+/* ===========================
+   Mensagens
+=========================== */
+
+.msg-success{
+
+    margin-bottom:18px;
+}
+
+/* ===========================
+   Responsivo
+=========================== */
+
+@media(max-width:900px){
+
+    .questoes-table{
+
+        min-width:980px;
+    }
+}

@@ -1,0 +1,219 @@
+/* =====================================================
+   MathGame - Recuperar Senha
+===================================================== */
+
+:root{
+    --bg:#08111f;
+    --card:#111d33ee;
+    --border:#1f3858;
+
+    --primary:#00eaff;
+    --primary-hover:#00c7d9;
+
+    --text:#ffffff;
+    --text-soft:#c7d6ea;
+    --placeholder:#8ea4bf;
+
+    --success:#2ecc71;
+    --danger:#ff5f6d;
+
+    --font-display:'Orbitron',sans-serif;
+    --font-body:'Rajdhani',sans-serif;
+    --font-mono:'Share Tech Mono',monospace;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:var(--font-body);
+    color:var(--text);
+
+    background:
+        radial-gradient(circle at top,#16365f 0%,transparent 45%),
+        radial-gradient(circle at bottom right,#32124b 0%,transparent 40%),
+        linear-gradient(135deg,#040b16,#08111f,#050913);
+
+    min-height:100vh;
+}
+
+/* Card */
+
+.login-card{
+    width:100%;
+    max-width:430px;
+
+    background:var(--card);
+
+    border:1px solid rgba(0,234,255,.25);
+
+    border-radius:18px;
+
+    padding:38px;
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+        0 0 25px rgba(0,234,255,.12),
+        0 0 80px rgba(0,0,0,.45);
+
+    color:var(--text);
+}
+
+/* Form */
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+label{
+    color:var(--text-soft);
+    font-size:1rem;
+    font-weight:600;
+}
+
+input{
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:10px;
+
+    border:1px solid #35527b;
+
+    background:#0b1628;
+
+    color:#ffffff;
+
+    font-size:1rem;
+
+    transition:.25s;
+}
+
+input::placeholder{
+    color:var(--placeholder);
+}
+
+input:focus{
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 12px rgba(0,234,255,.45);
+}
+
+/* Corrige o autofill do Chrome */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+    -webkit-text-fill-color:#ffffff;
+    -webkit-box-shadow:0 0 0 1000px #0b1628 inset;
+}
+
+/* Botão */
+
+.btn{
+    border:none;
+
+    cursor:pointer;
+
+    border-radius:10px;
+
+    transition:.25s;
+
+    font-family:var(--font-display);
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+}
+
+.btn-primary{
+    background:linear-gradient(90deg,#00eaff,#00bfff);
+
+    color:#00141d;
+}
+
+.btn-primary:hover{
+    background:linear-gradient(90deg,#00f7ff,#00d4ff);
+
+    transform:translateY(-2px);
+
+    box-shadow:0 0 18px rgba(0,234,255,.5);
+}
+
+.btn-full{
+    width:100%;
+
+    padding:15px;
+}
+
+/* Mensagens */
+
+.msg-erro{
+    background:rgba(255,95,109,.12);
+
+    color:#ffd5d8;
+
+    border:1px solid rgba(255,95,109,.4);
+
+    border-radius:10px;
+
+    padding:14px;
+
+    margin-bottom:18px;
+}
+
+.msg-success{
+    background:rgba(46,204,113,.12);
+
+    color:#c8ffe1;
+
+    border:1px solid rgba(46,204,113,.4);
+
+    border-radius:10px;
+
+    padding:14px;
+
+    margin-bottom:18px;
+}
+
+/* Link */
+
+.link-small{
+    display:block;
+
+    margin-top:22px;
+
+    text-align:center;
+
+    color:var(--primary);
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.25s;
+}
+
+.link-small:hover{
+    color:#ffffff;
+
+    text-shadow:0 0 10px var(--primary);
+}
+
+/* Responsivo */
+
+@media(max-width:500px){
+
+    .login-card{
+        padding:28px 22px;
+    }
+
+}

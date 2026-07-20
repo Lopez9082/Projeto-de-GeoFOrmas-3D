@@ -5,7 +5,7 @@
   <title>Recuperar Senha — MathGame</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/mathgame-theme/auth/recuperar_senha.css') ?>">
   <style>body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}</style>
 </head>
 <body>

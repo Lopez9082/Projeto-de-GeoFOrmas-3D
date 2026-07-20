@@ -9,6 +9,11 @@ class Recuperacao extends CI_Controller {
         $this->load->helper(['url','form']);
     }
 
+    public function index()
+    {
+        $this->load->view('auth/recuperar_senha');
+    }
+
     // tela para solicitar link
     public function solicitar(){
         if($this->input->post()){
@@ -64,7 +69,7 @@ class Recuperacao extends CI_Controller {
             }
             // atualizar senha
             $hash = password_hash($nova, PASSWORD_DEFAULT);
-            $this->db->where('id',$row->usuario_id)->update('usuarios',['senha_hash'=>$hash]);
+            $this->db->where('id',$row->usuario_id)->update('usuarios',['senha'=>$hash]);
             // marca token como usado
             $this->db->where('id',$row->id)->update('recuperacao_senha',['usado'=>1]);
             $this->session->set_flashdata('sucesso','Senha redefinida com sucesso. Faça login.');

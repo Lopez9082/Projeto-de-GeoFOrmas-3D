@@ -15,11 +15,21 @@ class Professor_model extends CI_Model {
      */
     public function autenticar($email, $senha)
     {
-        return $this->db
-                    ->where('email', $email)
-                    ->where('senha', $senha) // SEM HASH, conforme você pediu
-                    ->get($this->tabela)
-                    ->row();
+        $professor = $this->db
+            ->where('email', $email)
+            ->get($this->tabela)
+            ->row();
+
+        if (!$professor) {
+            return false;
+        }
+
+        // Verifica a senha criptografada
+        if (!password_verify($senha, $professor->senha)) {
+            return false;
+        }
+
+        return $professor;
     }
 
     public function criar($dados){
